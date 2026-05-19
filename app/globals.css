@@ -648,12 +648,14 @@ button {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 2rem;
   padding: 2rem;
+  min-width: 0;
 }
 
 .room-modal-gallery {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  min-width: 0;
 }
 
 .room-modal-main-image {
@@ -698,6 +700,22 @@ button {
   gap: 0.5rem;
   overflow-x: auto;
   padding-bottom: 0.5rem;
+  width: 100%;
+  min-width: 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.room-modal-thumbnails::-webkit-scrollbar {
+  height: 4px;
+}
+
+.room-modal-thumbnails::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.room-modal-thumbnails::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
 }
 
 .room-modal-thumbnails img {
@@ -721,6 +739,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  min-width: 0;
 }
 
 .room-modal-title {
@@ -797,7 +816,7 @@ button {
 
 @media (max-width: 1024px) {
   .room-modal-body {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
     padding: 1.5rem;
   }
