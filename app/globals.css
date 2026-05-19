@@ -412,6 +412,39 @@ button {
   display: none;
 }
 
+.slider-nav {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  color: #1a1a1a;
+}
+
+.slider-nav:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.slider-nav.prev {
+  left: -24px;
+}
+
+.slider-nav.next {
+  right: -24px;
+}
+
 .review-card {
   min-width: 350px;
   background: #fff;
@@ -518,25 +551,34 @@ button {
   left: 2rem;
   background-color: #25d366;
   color: #fff;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  border-radius: 30px;
+  height: 50px;
+  padding: 0 1.25rem 0 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   z-index: 1000;
   transition: all 0.3s ease;
   animation: pulse-green 2s infinite;
+  text-decoration: none;
 }
 
 .whatsapp-float:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+  color: #fff;
 }
 
 .whatsapp-float svg {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
+}
+
+.whatsapp-text {
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
 }
 
 @keyframes pulse-green {

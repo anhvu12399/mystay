@@ -320,42 +320,58 @@ function App() {
             <h2 className="section-title">What They Say</h2>
           </div>
           
-          <div className="reviews-slider">
-            {reviews.map((review) => (
-              <div key={review.id} className="review-card" style={{ minWidth: '400px', display: 'flex', flexDirection: 'column' }}>
-                <div className="review-header" style={{ marginBottom: '0.75rem' }}>
-                  <div>
-                    <h4 className="review-author">{review.author}</h4>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--text-light)' }}>{review.country} • {review.date}</span>
-                  </div>
-                  <div className="review-rating" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <div style={{ background: '#003580', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '14px', fontWeight: 'bold' }}>
-                      {review.rating.toFixed(1)}
+          <div className="reviews-slider-container" style={{ position: 'relative' }}>
+            <button 
+              className="slider-nav prev" 
+              onClick={() => document.getElementById('reviews-slider')?.scrollBy({ left: -400, behavior: 'smooth' })}
+            >
+              <ChevronLeft size={24} />
+            </button>
+
+            <div className="reviews-slider" id="reviews-slider" style={{ scrollBehavior: 'smooth' }}>
+              {reviews.map((review) => (
+                <div key={review.id} className="review-card" style={{ minWidth: '400px', display: 'flex', flexDirection: 'column' }}>
+                  <div className="review-header" style={{ marginBottom: '0.75rem' }}>
+                    <div>
+                      <h4 className="review-author">{review.author}</h4>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--text-light)' }}>{review.country} • {review.date}</span>
+                    </div>
+                    <div className="review-rating" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ background: '#003580', color: '#fff', padding: '4px 8px', borderRadius: '6px', fontSize: '14px', fontWeight: 'bold' }}>
+                        {review.rating.toFixed(1)}
+                      </div>
                     </div>
                   </div>
+                  <h5 style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '1rem', marginBottom: '1rem', color: '#1a1a1a' }}>
+                    "{review.title}"
+                  </h5>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', flexGrow: 1 }}>
+                    {review.positive && (
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                        <Smile size={18} color="#258635" style={{ flexShrink: 0, marginTop: '2px' }} />
+                        <p style={{ fontSize: '0.875rem', color: 'var(--text-main)', lineHeight: '1.4' }}>{review.positive}</p>
+                      </div>
+                    )}
+                    {review.negative && (
+                      <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
+                        <Frown size={18} color="#333" style={{ flexShrink: 0, marginTop: '2px' }} />
+                        <p style={{ fontSize: '0.875rem', color: 'var(--text-main)', lineHeight: '1.4' }}>{review.negative}</p>
+                      </div>
+                    )}
+                  </div>
+                  <div className="review-platform" style={{ marginTop: '1.5rem', marginBottom: 0 }}>
+                    <span style={{ fontWeight: 600, color: '#003580' }}>Booking.com</span> 
+                  </div>
                 </div>
-                <h5 style={{ fontFamily: 'var(--font-sans)', fontWeight: 600, fontSize: '1rem', marginBottom: '1rem', color: '#1a1a1a' }}>
-                  "{review.title}"
-                </h5>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', flexGrow: 1 }}>
-                  {review.positive && (
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                      <Smile size={18} color="#258635" style={{ flexShrink: 0, marginTop: '2px' }} />
-                      <p style={{ fontSize: '0.875rem', color: 'var(--text-main)', lineHeight: '1.4' }}>{review.positive}</p>
-                    </div>
-                  )}
-                  {review.negative && (
-                    <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                      <Frown size={18} color="#333" style={{ flexShrink: 0, marginTop: '2px' }} />
-                      <p style={{ fontSize: '0.875rem', color: 'var(--text-main)', lineHeight: '1.4' }}>{review.negative}</p>
-                    </div>
-                  )}
-                </div>
-                <div className="review-platform" style={{ marginTop: '1.5rem', marginBottom: 0 }}>
-                  <span style={{ fontWeight: 600, color: '#003580' }}>Booking.com</span> 
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            <button 
+              className="slider-nav next" 
+              onClick={() => document.getElementById('reviews-slider')?.scrollBy({ left: 400, behavior: 'smooth' })}
+            >
+              <ChevronRight size={24} />
+            </button>
           </div>
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
             <a href="https://www.booking.com/hotel/vn/my-way.en-gb.html?aid=356980&label=gog235jc-10CAso9AFCBm15LXdheUgzWANo9AGIAQGYATO4AQfIAQ3YAQPoAQH4AQGIAgGoAgG4AtDiq9AGwAIB0gIkNmNjYmMwZWMtNjM2Yi00OTFiLTg1MjEtZWYxMjRlMzVjNzUy2AIB4AIB&sid=3493809436101eb78759c1da9f70d4ae&all_sr_blocks=914487502_363026539_2_0_0&checkin=2026-05-19&checkout=2026-05-20&dest_id=-3730078&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=914487502_363026539_2_0_0&hpos=1&matching_block_id=914487502_363026539_2_0_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=914487502_363026539_2_0_0__100000000&srepoch=1779102037&srpvid=1a214d68b1ea0de7&type=total&ucfs=1&#tab-reviews" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ display: 'inline-flex', padding: '1rem 3rem', borderColor: '#003580', color: '#003580', fontWeight: 600 }}>
@@ -369,6 +385,7 @@ function App() {
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
           <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
         </svg>
+        <span className="whatsapp-text">Direct message for 10% off</span>
       </a>
 
       <footer className="footer">
@@ -391,9 +408,17 @@ function App() {
           <div className="footer-links">
             <h4>Contact</h4>
             <ul>
-              <li><MapPin size={16} style={{ display: 'inline', marginRight: '8px' }}/>123 Boutique Street, City</li>
-              <li>hello@mystayapartment.com</li>
-              <li>+84 123 456 789</li>
+              <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
+                <MapPin size={18} style={{ flexShrink: 0, marginTop: '2px' }}/>
+                139/5 Nguyễn Cư Trinh, Street, Cầu Ông Lãnh, Hồ Chí Minh 70000
+              </li>
+              <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                hello@mystayapartment.com
+              </li>
+              <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <Phone size={16} style={{ flexShrink: 0 }}/>
+                +84 0988 600 388
+              </li>
             </ul>
           </div>
         </div>
