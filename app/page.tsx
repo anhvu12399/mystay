@@ -416,7 +416,7 @@ function App() {
                 139/5 Nguyễn Cư Trinh, Street, Cầu Ông Lãnh, Hồ Chí Minh 70000
               </li>
               <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                hello@mystayapartment.com
+                mywayapt@gmail.com
               </li>
               <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 <Phone size={16} style={{ flexShrink: 0 }}/>
