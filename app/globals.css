@@ -28,6 +28,8 @@ body {
   background-color: var(--bg-main);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -864,6 +866,15 @@ button {
     width: 60px;
     height: 45px;
   }
+
+  .room-modal-title {
+    font-size: 1.5rem;
+  }
+
+  .room-modal-desc {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
 }
 
 @media (max-width: 480px) {
@@ -879,23 +890,57 @@ button {
   }
 
   .room-modal-body {
-    padding: 1rem 0.75rem;
+    padding: 1rem 0.85rem;
     gap: 1rem;
   }
 
   .room-modal-main-image {
-    height: 200px;
+    height: 180px;
   }
 
   .room-modal-close {
     top: 0.75rem;
     right: 0.75rem;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
+  }
+
+  .room-modal-title {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .room-modal-meta {
+    gap: 0.4rem;
+  }
+
+  .room-modal-meta span {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .room-modal-desc {
+    font-size: 0.825rem;
+    line-height: 1.5;
+  }
+
+  .room-modal-thumbnails img {
+    width: 50px;
+    height: 38px;
+  }
+
+  .amenity-group h4 {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
   }
 
   .amenity-group ul {
     grid-template-columns: 1fr;
+    gap: 0.4rem;
+  }
+
+  .amenity-group li {
+    font-size: 0.8rem;
   }
 
   .room-modal-footer {
@@ -906,7 +951,7 @@ button {
   }
 
   .room-modal-footer .price {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
   }
 
   .room-modal-footer .btn {
