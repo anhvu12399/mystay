@@ -3,6 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { User, Maximize, MapPin, Star, Menu, X, ArrowRight, Smile, Frown } from 'lucide-react';
 import RoomModal from '../components/RoomModal';
 
+const heroImages = [
+  "https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg",
+  "https://q-xx.bstatic.com/xdata/images/hotel/max1280x900/676916728.jpg?k=fd6882e0a2af07e107f5526cc798fae525cf39211205720d5ba3dee804519aef&o=",
+  "https://q-xx.bstatic.com/xdata/images/hotel/max1280x900/414205039.jpg?k=93718982e114147c0eb1d9165c88e8522732b2532cfd79f7e918279c17f0ebce&o="
+];
+
 const rooms = [
   {
     id: 1,
@@ -195,6 +201,14 @@ function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<any>(null);
+  const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeroIdx((prev) => (prev + 1) % heroImages.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -226,11 +240,19 @@ function App() {
       </nav>
 
       <header className="hero">
-        <img 
-          src="https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg" 
-          alt="Luxury Hotel" 
-          className="hero-bg"
-        />
+        {heroImages.map((src, idx) => (
+          <img 
+            key={idx}
+            src={src} 
+            alt="Luxury Hotel" 
+            className="hero-bg"
+            style={{ 
+              opacity: idx === currentHeroIdx ? 1 : 0, 
+              transition: 'opacity 1s ease-in-out',
+              zIndex: idx === currentHeroIdx ? 0 : -1
+            }}
+          />
+        ))}
         <div className="hero-content">
           <span className="hero-subtitle">Boutique Luxury</span>
           <h1 className="hero-title">Experience Unparalleled Comfort</h1>
