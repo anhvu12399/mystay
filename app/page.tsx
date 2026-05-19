@@ -12,12 +12,16 @@ const rooms = [
     size: '30 m²',
     price: '1,000,000',
     originalPrice: '1,000,000',
-    image: '/deluxe_double_room_1779102139673.png',
+    image: 'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916728.jpg?k=fd6882e0a2af07e107f5526cc798fae525cf39211205720d5ba3dee804519aef&o=&s=1024x',
     images: [
-      '/deluxe_double_room_1779102139673.png',
-      '/apartment_balcony_1779102155333.png',
-      '/studio_balcony_1779102172037.png',
-      'https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg?ce=2&s=1024x768'
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916728.jpg?k=fd6882e0a2af07e107f5526cc798fae525cf39211205720d5ba3dee804519aef&o=&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/733150354.jpg?k=a17f2a098a33db4c5c137268fa3f5d4a12e8d4f8f0e921f759eeccbfc4308fa6&o=&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916722.jpg?k=2f3f8ec804263fc726b4c8a5cfc5eb9bdc626ff23cb668578d9d99dd974beff4&o=&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/733150352.jpg?k=4db5b577bc5e63d9c21a1bc374bf29e1cb686d564dae74935ee135016c25bfe9&o=&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/733150353.jpg?k=3123eaa06ba214741e76aa4d69e2e3e8e9ed3f7bd90b35ef137e81effe67cb40&o=&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916717.jpg?k=9efc582a838238563392ce882027c0cdf10623a8eb4e7a8bdf29d7f695e8b1df&o=&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/411164263.jpg?k=dd11ec0eb0b12d76f3c051ff5ec2592fbd8c24690e1ee6b929292d75432863d6&o=&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/733150349.jpg?k=131f1416d941f89bcf08b50fea3f1f46888ae805c36a18430f33bbe6022e2b6f&o=&s=1024x'
     ],
     features: ['Private kitchen', 'Private bathroom', 'View', 'Air conditioning', 'Flat-screen TV', 'Free WiFi'],
     amenities: {
