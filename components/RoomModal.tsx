@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Maximize, User, Check } from 'lucide-react';
 
-export default function RoomModal({ room, onClose }) {
+export default function RoomModal({ room, onClose, onBookNow }) {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
   if (!room) return null;
@@ -84,7 +84,16 @@ export default function RoomModal({ room, onClose }) {
                 <span style={{fontSize: '0.875rem', fontWeight: 400, color: 'var(--text-light)', display: 'block'}}>Price per night</span>
                 VND {room.price} <span style={{ fontSize: '0.9rem', color: 'var(--text-light)', fontWeight: 'normal', marginLeft: '0.5rem' }}>(approx. ${room.usdPrice})</span>
               </div>
-              <button className="btn btn-primary" style={{ padding: '1rem 2.5rem' }}>Book Now</button>
+              <button 
+                className="btn btn-primary" 
+                style={{ padding: '1rem 2.5rem' }}
+                onClick={() => {
+                  if (onBookNow) onBookNow(room.title);
+                  onClose();
+                }}
+              >
+                Book Now
+              </button>
             </div>
           </div>
         </div>

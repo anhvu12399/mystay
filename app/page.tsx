@@ -46,9 +46,9 @@ const rooms = [
     subtitle: 'Bedroom 1: 1 extra-large double bed | Living room: 1 sofa bed',
     beds: 'Entire apartment',
     size: '45 m²',
-    price: '2,300,000',
-    originalPrice: '2,300,000',
-    usdPrice: '90',
+    price: '1,500,000',
+    originalPrice: '1,500,000',
+    usdPrice: '59',
     image: 'https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg?ce=2&s=1024x768',
     images: [
       'https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg?ce=2&s=1024x768',
@@ -88,9 +88,9 @@ const rooms = [
     subtitle: '1 extra-large double bed',
     beds: 'Entire studio',
     size: '30 m²',
-    price: '2,300,000',
-    originalPrice: '2,300,000',
-    usdPrice: '90',
+    price: '1,500,000',
+    originalPrice: '1,500,000',
+    usdPrice: '59',
     image: 'https://pix8.agoda.net/hotelImages/71131100/1129048000/1abd20010e503d4d000aa308fd0a1623.jpg?ce=2&s=1024x',
     images: [
       'https://pix8.agoda.net/hotelImages/71131100/1129048000/1abd20010e503d4d000aa308fd0a1623.jpg?ce=2&s=1024x',
@@ -205,6 +205,7 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<any>(null);
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
+  const [minDate, setMinDate] = useState('');
   const [bookingForm, setBookingForm] = useState({
     name: '',
     email: '',
@@ -274,6 +275,12 @@ function App() {
   };
 
   useEffect(() => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    setMinDate(`${yyyy}-${mm}-${dd}`);
+
     const interval = setInterval(() => {
       setCurrentHeroIdx((prev) => (prev + 1) % heroImages.length);
     }, 2500);
@@ -377,7 +384,15 @@ function App() {
                     <span className="room-price">VND {room.price}</span>
                     <span className="room-price-usd" style={{ fontSize: '0.85rem', color: 'var(--text-light)', display: 'block', marginTop: '0.15rem' }}>approx. ${room.usdPrice}</span>
                   </div>
-                  <button className="btn btn-primary" style={{ padding: '0.5rem 1.5rem', fontSize: '0.75rem' }}>
+                  <button 
+                    className="btn btn-primary" 
+                    style={{ padding: '0.5rem 1.5rem', fontSize: '0.75rem' }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setBookingForm({ ...bookingForm, room: room.title });
+                      document.getElementById('book-direct')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                  >
                     Book Now
                   </button>
                 </div>
@@ -542,6 +557,7 @@ function App() {
                     value={bookingForm.checkIn}
                     onChange={(e) => setBookingForm({ ...bookingForm, checkIn: e.target.value })}
                     required
+                    min={minDate}
                   />
                 </div>
 
@@ -553,6 +569,7 @@ function App() {
                     value={bookingForm.checkOut}
                     onChange={(e) => setBookingForm({ ...bookingForm, checkOut: e.target.value })}
                     required
+                    min={bookingForm.checkIn || minDate}
                   />
                 </div>
               </div>
@@ -656,6 +673,10 @@ function App() {
         <RoomModal 
           room={selectedRoom} 
           onClose={() => setSelectedRoom(null)} 
+          onBookNow={(roomTitle) => {
+            setBookingForm((prev) => ({ ...prev, room: roomTitle }));
+            document.getElementById('book-direct')?.scrollIntoView({ behavior: 'smooth' });
+          }}
         />
       )}
     </>
