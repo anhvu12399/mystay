@@ -227,7 +227,7 @@ function App() {
 
       <header className="hero">
         <img 
-          src="/apartment_balcony_1779102155333.png" 
+          src="https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg" 
           alt="Luxury Hotel" 
           className="hero-bg"
         />
