@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { User, Maximize, MapPin, Star, Menu, X, ArrowRight, Smile, Frown } from 'lucide-react';
+import { User, Maximize, MapPin, Star, Menu, X, ArrowRight, Smile, Frown, Image as ImageIcon } from 'lucide-react';
 import RoomModal from '../components/RoomModal';
 
 const heroImages = [
@@ -272,6 +272,9 @@ function App() {
             <div key={room.id} className="room-card" onClick={() => setSelectedRoom(room)} style={{ cursor: 'pointer' }}>
               <div className="room-image-wrap">
                 <img src={room.image} alt={room.title} className="room-image" />
+                <div className="view-photos-overlay">
+                  <ImageIcon size={14} /> View Photos
+                </div>
                 {room.badge && <span className="room-badge">{room.badge}</span>}
               </div>
               

@@ -285,6 +285,29 @@ button {
   transform: scale(1.05);
 }
 
+.view-photos-overlay {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+  transition: var(--transition);
+}
+
+.room-card:hover .view-photos-overlay {
+  background: rgba(0, 0, 0, 0.85);
+  transform: scale(1.05);
+}
+
 .room-badge {
   position: absolute;
   top: 1rem;
