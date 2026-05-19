@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { User, Maximize, MapPin, Star, Menu, X, ArrowRight, Smile, Frown, Image as ImageIcon, ChevronLeft, ChevronRight, Phone } from 'lucide-react';
+import { User, Maximize, MapPin, Star, Menu, X, ArrowRight, Smile, Frown, Image as ImageIcon, ChevronLeft, ChevronRight, Phone, Calendar, Mail, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import RoomModal from '../components/RoomModal';
 
 const heroImages = [
@@ -202,6 +202,73 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<any>(null);
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
+  const [bookingForm, setBookingForm] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    room: 'Deluxe Double Room',
+    checkIn: '',
+    checkOut: '',
+    requests: ''
+  });
+  const [bookingStatus, setBookingStatus] = useState<{
+    loading: boolean;
+    success: boolean;
+    error: string | null;
+  }>({
+    loading: false,
+    success: false,
+    error: null
+  });
+
+  const handleBookingSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setBookingStatus({ loading: true, success: false, error: null });
+
+    // Client-side date validation
+    if (new Date(bookingForm.checkOut) <= new Date(bookingForm.checkIn)) {
+      setBookingStatus({
+        loading: false,
+        success: false,
+        error: 'Check-out date must be later than check-in date.'
+      });
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(bookingForm)
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send booking request.');
+      }
+
+      setBookingStatus({ loading: false, success: true, error: null });
+      // Reset form
+      setBookingForm({
+        name: '',
+        email: '',
+        phone: '',
+        room: 'Deluxe Double Room',
+        checkIn: '',
+        checkOut: '',
+        requests: ''
+      });
+    } catch (err: any) {
+      setBookingStatus({
+        loading: false,
+        success: false,
+        error: err.message || 'Something went wrong. Please try again.'
+      });
+    }
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -392,6 +459,143 @@ function App() {
             <a href="https://www.booking.com/hotel/vn/my-way.en-gb.html?aid=356980&label=gog235jc-10CAso9AFCBm15LXdheUgzWANo9AGIAQGYATO4AQfIAQ3YAQPoAQH4AQGIAgGoAgG4AtDiq9AGwAIB0gIkNmNjYmMwZWMtNjM2Yi00OTFiLTg1MjEtZWYxMjRlMzVjNzUy2AIB4AIB&sid=3493809436101eb78759c1da9f70d4ae&all_sr_blocks=914487502_363026539_2_0_0&checkin=2026-05-19&checkout=2026-05-20&dest_id=-3730078&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=914487502_363026539_2_0_0&hpos=1&matching_block_id=914487502_363026539_2_0_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=914487502_363026539_2_0_0__100000000&srepoch=1779102037&srpvid=1a214d68b1ea0de7&type=total&ucfs=1&#tab-reviews" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ display: 'inline-flex', padding: '1rem 3rem', borderColor: '#003580', color: '#003580', fontWeight: 600 }}>
               View All Reviews on Booking.com
             </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="book-direct" className="booking-section py-16">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-subtitle">Secure Your Apartment</span>
+            <h2 className="section-title">Book Direct & Save 10%</h2>
+            <p className="section-desc" style={{ maxWidth: '600px', margin: '0 auto', color: 'var(--text-light)', fontSize: '0.95rem' }}>
+              Enjoy our guaranteed best rates and an exclusive direct booking discount. 
+              Fill out this quick reservation inquiry and our reservation team will contact you within 3 hours.
+            </p>
+          </div>
+
+          <div className="booking-container">
+            <form onSubmit={handleBookingSubmit} className="booking-form-el">
+              <div className="booking-grid">
+                <div className="form-group">
+                  <label htmlFor="booking-name">Full Name</label>
+                  <input
+                    type="text"
+                    id="booking-name"
+                    value={bookingForm.name}
+                    onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
+                    placeholder="e.g. John Doe"
+                    required
+                    autoComplete="name"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="booking-email">Email Address</label>
+                  <input
+                    type="email"
+                    id="booking-email"
+                    value={bookingForm.email}
+                    onChange={(e) => setBookingForm({ ...bookingForm, email: e.target.value })}
+                    placeholder="e.g. johndoe@gmail.com"
+                    required
+                    autoComplete="email"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="booking-phone">Phone Number</label>
+                  <input
+                    type="tel"
+                    id="booking-phone"
+                    value={bookingForm.phone}
+                    onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
+                    placeholder="e.g. +84 988 600 388"
+                    required
+                    autoComplete="tel"
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="booking-room">Select Apartment</label>
+                  <select
+                    id="booking-room"
+                    value={bookingForm.room}
+                    onChange={(e) => setBookingForm({ ...bookingForm, room: e.target.value })}
+                    required
+                  >
+                    <option value="Deluxe Double Room">Deluxe Double Room</option>
+                    <option value="Apartment with Balcony">Apartment with Balcony</option>
+                    <option value="Studio with Balcony">Studio with Balcony</option>
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="booking-checkin">Check-in Date</label>
+                  <input
+                    type="date"
+                    id="booking-checkin"
+                    value={bookingForm.checkIn}
+                    onChange={(e) => setBookingForm({ ...bookingForm, checkIn: e.target.value })}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="booking-checkout">Check-out Date</label>
+                  <input
+                    type="date"
+                    id="booking-checkout"
+                    value={bookingForm.checkOut}
+                    onChange={(e) => setBookingForm({ ...bookingForm, checkOut: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-group full-width mt-4">
+                <label htmlFor="booking-requests">Special Requests (Optional)</label>
+                <textarea
+                  id="booking-requests"
+                  rows={3}
+                  value={bookingForm.requests}
+                  onChange={(e) => setBookingForm({ ...bookingForm, requests: e.target.value })}
+                  placeholder="e.g., Airport pick-up, preferred check-in time, twin beds setup..."
+                ></textarea>
+              </div>
+
+              <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                <button
+                  type="submit"
+                  disabled={bookingStatus.loading}
+                  className="btn btn-primary btn-submit-booking"
+                >
+                  {bookingStatus.loading ? (
+                    'Processing Booking...'
+                  ) : (
+                    <>
+                      Reserve Direct & Save 10% <Send size={16} style={{ marginLeft: '8px' }} />
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {bookingStatus.success && (
+                <div className="booking-alert success mt-4">
+                  <CheckCircle size={20} style={{ flexShrink: 0 }} />
+                  <div>
+                    <strong>Request sent successfully!</strong> We've locked in your 10% direct discount. Our reservations desk will email you to finalize check-in times and payment details within the next 3 hours.
+                  </div>
+                </div>
+              )}
+
+              {bookingStatus.error && (
+                <div className="booking-alert error mt-4">
+                  <AlertCircle size={20} style={{ flexShrink: 0 }} />
+                  <div>{bookingStatus.error}</div>
+                </div>
+              )}
+            </form>
           </div>
         </div>
       </section>
