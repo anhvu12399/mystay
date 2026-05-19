@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { User, Maximize, MapPin, Star, Menu, X, ArrowRight, Smile, Frown, Image as ImageIcon, ChevronLeft, ChevronRight, Phone, Calendar, Mail, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { User, Maximize, MapPin, Star, Menu, X, ArrowRight, Smile, Frown, Image as ImageIcon, ChevronLeft, ChevronRight, ChevronDown, Phone, Calendar, Mail, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import RoomModal from '../components/RoomModal';
 
 const heroImages = [
@@ -200,6 +200,29 @@ const reviews = [
   }
 ];
 
+const countries = [
+  { name: 'Vietnam', flag: '🇻🇳', code: '+84' },
+  { name: 'United States', flag: '🇺🇸', code: '+1' },
+  { name: 'South Korea', flag: '🇰🇷', code: '+82' },
+  { name: 'Japan', flag: '🇯🇵', code: '+81' },
+  { name: 'Singapore', flag: '🇸🇬', code: '+65' },
+  { name: 'Australia', flag: '🇦🇺', code: '+61' },
+  { name: 'United Kingdom', flag: '🇬🇧', code: '+44' },
+  { name: 'Taiwan', flag: '🇹🇼', code: '+886' },
+  { name: 'China', flag: '🇨🇳', code: '+86' },
+  { name: 'Germany', flag: '🇩🇪', code: '+49' },
+  { name: 'France', flag: '🇫🇷', code: '+33' },
+  { name: 'India', flag: '🇮🇳', code: '+91' },
+  { name: 'Malaysia', flag: '🇲🇾', code: '+60' },
+  { name: 'Thailand', flag: '🇹🇭', code: '+66' },
+  { name: 'Philippines', flag: '🇵🇭', code: '+63' },
+  { name: 'Indonesia', flag: '🇮🇩', code: '+62' },
+  { name: 'Cambodia', flag: '🇰🇭', code: '+855' },
+  { name: 'Laos', flag: '🇱🇦', code: '+856' },
+  { name: 'New Zealand', flag: '🇳🇿', code: '+64' },
+  { name: 'Canada', flag: '🇨🇦', code: '+1' }
+];
+
 function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -215,6 +238,39 @@ function App() {
     checkOut: '',
     requests: ''
   });
+
+  // Local phone inputs states
+  const [phoneLocal, setPhoneLocal] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState({ name: 'Vietnam', flag: '🇻🇳', code: '+84' });
+  const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Sync phone local + prefix to main bookingForm.phone
+  useEffect(() => {
+    setBookingForm(prev => ({
+      ...prev,
+      phone: phoneLocal.trim() ? `${selectedCountry.code} ${phoneLocal.trim()}` : ''
+    }));
+  }, [selectedCountry, phoneLocal]);
+
+  // Click outside handler for country selector dropdown
+  useEffect(() => {
+    const handleOutsideClick = () => {
+      setCountryDropdownOpen(false);
+    };
+    if (countryDropdownOpen) {
+      window.addEventListener('click', handleOutsideClick);
+    }
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, [countryDropdownOpen]);
+
+  // Filter countries list by search term
+  const filteredCountries = countries.filter(c => 
+    c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    c.code.includes(searchQuery)
+  );
   const [bookingStatus, setBookingStatus] = useState<{
     loading: boolean;
     success: boolean;
@@ -265,6 +321,8 @@ function App() {
         checkOut: '',
         requests: ''
       });
+      setPhoneLocal('');
+      setSelectedCountry({ name: 'Vietnam', flag: '🇻🇳', code: '+84' });
     } catch (err: any) {
       setBookingStatus({
         loading: false,
@@ -522,17 +580,77 @@ function App() {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="form-group" style={{ position: 'relative' }}>
                   <label htmlFor="booking-phone">Phone Number</label>
-                  <input
-                    type="tel"
-                    id="booking-phone"
-                    value={bookingForm.phone}
-                    onChange={(e) => setBookingForm({ ...bookingForm, phone: e.target.value })}
-                    placeholder="e.g. +84 988 600 388"
-                    required
-                    autoComplete="tel"
-                  />
+                  <div className="phone-input-wrapper">
+                    <button
+                      type="button"
+                      className="country-selector-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCountryDropdownOpen(!countryDropdownOpen);
+                      }}
+                      aria-haspopup="listbox"
+                      aria-expanded={countryDropdownOpen}
+                    >
+                      <span className="selected-flag">{selectedCountry.flag}</span>
+                      <span className="selected-code">{selectedCountry.code}</span>
+                      <ChevronDown size={14} className={`dropdown-arrow ${countryDropdownOpen ? 'open' : ''}`} />
+                    </button>
+                    
+                    <input
+                      type="tel"
+                      id="booking-phone"
+                      value={phoneLocal}
+                      onChange={(e) => setPhoneLocal(e.target.value)}
+                      placeholder="e.g. 988 600 388"
+                      required
+                      autoComplete="tel"
+                    />
+
+                    {countryDropdownOpen && (
+                      <div 
+                        className="country-dropdown-menu" 
+                        role="listbox"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div className="country-dropdown-search-wrapper">
+                          <input 
+                            type="text" 
+                            placeholder="Search country..." 
+                            className="country-search-input"
+                            onClick={(e) => e.stopPropagation()}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            value={searchQuery}
+                          />
+                        </div>
+                        <ul className="country-list">
+                          {filteredCountries.map((c) => (
+                            <li
+                              key={`${c.name}-${c.code}`}
+                              role="option"
+                              aria-selected={selectedCountry.code === c.code}
+                              onClick={() => {
+                                setSelectedCountry(c);
+                                setCountryDropdownOpen(false);
+                                setSearchQuery('');
+                              }}
+                              className={`country-item ${selectedCountry.code === c.code ? 'active' : ''}`}
+                            >
+                              <span className="country-flag-emoji">{c.flag}</span>
+                              <span className="country-name-text">{c.name}</span>
+                              <span className="country-code-text">{c.code}</span>
+                            </li>
+                          ))}
+                          {filteredCountries.length === 0 && (
+                            <li className="country-item" style={{ cursor: 'default', color: 'var(--text-light)', justifyContent: 'center' }}>
+                              No countries found
+                            </li>
+                          )}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 <div className="form-group">
