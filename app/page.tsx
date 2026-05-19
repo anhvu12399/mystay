@@ -18,6 +18,7 @@ const rooms = [
     size: '30 m²',
     price: '1,000,000',
     originalPrice: '1,000,000',
+    usdPrice: '39',
     image: 'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916728.jpg?k=fd6882e0a2af07e107f5526cc798fae525cf39211205720d5ba3dee804519aef&o=&s=1024x',
     images: [
       'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916728.jpg?k=fd6882e0a2af07e107f5526cc798fae525cf39211205720d5ba3dee804519aef&o=&s=1024x',
@@ -47,6 +48,7 @@ const rooms = [
     size: '45 m²',
     price: '2,300,000',
     originalPrice: '2,300,000',
+    usdPrice: '90',
     image: 'https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg?ce=2&s=1024x768',
     images: [
       'https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg?ce=2&s=1024x768',
@@ -88,6 +90,7 @@ const rooms = [
     size: '30 m²',
     price: '2,300,000',
     originalPrice: '2,300,000',
+    usdPrice: '90',
     image: 'https://pix8.agoda.net/hotelImages/71131100/1129048000/1abd20010e503d4d000aa308fd0a1623.jpg?ce=2&s=1024x',
     images: [
       'https://pix8.agoda.net/hotelImages/71131100/1129048000/1abd20010e503d4d000aa308fd0a1623.jpg?ce=2&s=1024x',
@@ -372,6 +375,7 @@ function App() {
                   <div className="room-price-wrap">
                     <span className="room-price-label">From</span>
                     <span className="room-price">VND {room.price}</span>
+                    <span className="room-price-usd" style={{ fontSize: '0.85rem', color: 'var(--text-light)', display: 'block', marginTop: '0.15rem' }}>approx. ${room.usdPrice}</span>
                   </div>
                   <button className="btn btn-primary" style={{ padding: '0.5rem 1.5rem', fontSize: '0.75rem' }}>
                     Book Now

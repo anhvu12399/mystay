@@ -82,7 +82,7 @@ export default function RoomModal({ room, onClose }) {
             <div className="room-modal-footer">
               <div className="price">
                 <span style={{fontSize: '0.875rem', fontWeight: 400, color: 'var(--text-light)', display: 'block'}}>Price per night</span>
-                VND {room.price}
+                VND {room.price} <span style={{ fontSize: '0.9rem', color: 'var(--text-light)', fontWeight: 'normal', marginLeft: '0.5rem' }}>(approx. ${room.usdPrice})</span>
               </div>
               <button className="btn btn-primary" style={{ padding: '1rem 2.5rem' }}>Book Now</button>
             </div>
