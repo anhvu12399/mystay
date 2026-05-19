@@ -82,12 +82,20 @@ const rooms = [
     size: '30 m²',
     price: '2,300,000',
     originalPrice: '2,300,000',
-    image: '/studio_balcony_1779102172037.png',
+    image: 'https://pix8.agoda.net/hotelImages/71131100/1129048000/1abd20010e503d4d000aa308fd0a1623.jpg?ce=2&s=1024x',
     images: [
-      '/studio_balcony_1779102172037.png',
-      '/apartment_balcony_1779102155333.png',
-      '/deluxe_double_room_1779102139673.png',
-      'https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg?ce=2&s=1024x768'
+      'https://pix8.agoda.net/hotelImages/71131100/1129048000/1abd20010e503d4d000aa308fd0a1623.jpg?ce=2&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414205039.jpg?k=93718982e114147c0eb1d9165c88e8522732b2532cfd79f7e918279c17f0ebce&o=&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414205006.jpg?k=625eb607c5758e04b0c4da02f81c33c0ffee98e5f6829bbe460c796210612340&o=&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414204983.jpg?k=b4046c481c04a6f74fb242e2a2124030d2f4b76ffc1e65fea8fb983bc3f9c5cb&o=&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414204981.jpg?k=c0ec3aabb23e1c3ab7a621e036fe550c3288ee90b5d10135b765e356f46d874a&o=&s=1024x',
+      'https://pix8.agoda.net/hotelImages/71131100/1129048000/096d6398b18e599c6e1e962d92d5dab3.jpg?ce=2&s=1024x',
+      'https://pix8.agoda.net/hotelImages/71131100/1129048000/9ee0971281692360a8bdc48e51357825.jpg?ce=2&s=1024x',
+      'https://pix8.agoda.net/hotelImages/71131100/1129048000/e225c3f0969f7bdfb9ab1a1eedb18b20.jpg?ce=2&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414205032.jpg?k=aebd1e6c0ff83b60a15cba7ddbc448331f1bdce4e731f236556d056743671229&o=&s=1024x',
+      'https://pix8.agoda.net/hotelImages/71131100/1129048000/0795f10b722f24d3eee21f960753e5d9.jpg?ce=2&s=1024x',
+      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414205001.jpg?k=a9854be3492ac19fc8e678d303f73cf0b0d4a7ad095d9a5698a5cb44a024d874&o=&s=1024x',
+      'https://pix8.agoda.net/hotelImages/71131100/1129048000/33918d9d48aaba8eda70776dc9268e7b.jpg?ce=2&s=1024x'
     ],
     features: ['Private kitchen', 'Private bathroom', 'Balcony', 'View', 'Air conditioning', 'Free WiFi'],
     amenities: {
