@@ -402,10 +402,12 @@ button {
 
 .reviews-slider {
   display: flex;
-  gap: 2rem;
+  gap: 1.5rem;
   overflow-x: auto;
   padding-bottom: 2rem;
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
 .reviews-slider::-webkit-scrollbar {
@@ -446,11 +448,15 @@ button {
 }
 
 .review-card {
-  min-width: 350px;
+  width: 400px;
+  min-width: 400px;
   background: #fff;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
+  scroll-snap-align: center;
 }
 
 .review-header {
@@ -617,20 +623,22 @@ button {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: #fff;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
   border-radius: 50%;
   width: 40px; height: 40px;
   display: flex; align-items: center; justify-content: center;
   cursor: pointer;
-  z-index: 10;
+  z-index: 100;
   transition: all 0.2s ease;
 }
 
 .room-modal-close:hover {
-  background: #e0e0e0;
+  background: #fff;
+  transform: scale(1.05);
 }
 
 .room-modal-body {
@@ -660,7 +668,7 @@ button {
 .room-modal-main-image img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .gallery-nav {
@@ -810,5 +818,99 @@ button {
   
   .rooms-grid {
     grid-template-columns: 1fr;
+  }
+
+  /* Reviews slider mobile styles */
+  .review-card {
+    width: 85vw;
+    min-width: 280px;
+    max-width: 420px;
+    padding: 1.5rem;
+  }
+  
+  .slider-nav {
+    width: 36px;
+    height: 36px;
+    top: 45%;
+  }
+
+  .slider-nav.prev {
+    left: 0.25rem;
+  }
+
+  .slider-nav.next {
+    right: 0.25rem;
+  }
+
+  /* Room modal mobile styles */
+  .room-modal-overlay {
+    padding: 0.5rem;
+  }
+  
+  .room-modal-content {
+    max-height: 95vh;
+  }
+
+  .room-modal-body {
+    padding: 1rem;
+    gap: 1.25rem;
+  }
+
+  .room-modal-main-image {
+    height: 240px;
+  }
+
+  .room-modal-thumbnails img {
+    width: 60px;
+    height: 45px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Room modal small screen bottom sheet view */
+  .room-modal-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .room-modal-content {
+    max-height: 93vh;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .room-modal-body {
+    padding: 1rem 0.75rem;
+    gap: 1rem;
+  }
+
+  .room-modal-main-image {
+    height: 200px;
+  }
+
+  .room-modal-close {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+  }
+
+  .amenity-group ul {
+    grid-template-columns: 1fr;
+  }
+
+  .room-modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    text-align: center;
+  }
+
+  .room-modal-footer .price {
+    font-size: 1.35rem;
+  }
+
+  .room-modal-footer .btn {
+    width: 100%;
+    padding: 0.75rem 2rem !important;
   }
 }

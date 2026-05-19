@@ -326,14 +326,20 @@ function App() {
           <div className="reviews-slider-container" style={{ position: 'relative' }}>
             <button 
               className="slider-nav prev" 
-              onClick={() => document.getElementById('reviews-slider')?.scrollBy({ left: -400, behavior: 'smooth' })}
+              onClick={() => {
+                const slider = document.getElementById('reviews-slider');
+                if (slider) {
+                  const cardWidth = slider.querySelector('.review-card')?.clientWidth || 400;
+                  slider.scrollBy({ left: -(cardWidth + 24), behavior: 'smooth' });
+                }
+              }}
             >
               <ChevronLeft size={24} />
             </button>
 
             <div className="reviews-slider" id="reviews-slider" style={{ scrollBehavior: 'smooth' }}>
               {reviews.map((review) => (
-                <div key={review.id} className="review-card" style={{ minWidth: '400px', display: 'flex', flexDirection: 'column' }}>
+                <div key={review.id} className="review-card">
                   <div className="review-header" style={{ marginBottom: '0.75rem' }}>
                     <div>
                       <h4 className="review-author">{review.author}</h4>
@@ -371,7 +377,13 @@ function App() {
 
             <button 
               className="slider-nav next" 
-              onClick={() => document.getElementById('reviews-slider')?.scrollBy({ left: 400, behavior: 'smooth' })}
+              onClick={() => {
+                const slider = document.getElementById('reviews-slider');
+                if (slider) {
+                  const cardWidth = slider.querySelector('.review-card')?.clientWidth || 400;
+                  slider.scrollBy({ left: cardWidth + 24, behavior: 'smooth' });
+                }
+              }}
             >
               <ChevronRight size={24} />
             </button>
