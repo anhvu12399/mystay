@@ -75,30 +75,6 @@ const rooms = [
     badge: 'Premium',
   },
   {
-    id: 3,
-    title: 'Apartment with Balcony',
-    subtitle: 'Bedroom 1: 1 extra-large double bed | Living room: 1 sofa bed',
-    beds: 'Entire apartment',
-    size: '30 m²',
-    price: '2,300,000',
-    originalPrice: '2,300,000',
-    image: '/apartment_balcony_1779102155333.png',
-    images: [
-      '/apartment_balcony_1779102155333.png',
-      '/deluxe_double_room_1779102139673.png',
-      '/studio_balcony_1779102172037.png',
-      'https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg?ce=2&s=1024x768'
-    ],
-    features: ['Private kitchen', 'Ensuite bathroom', 'Balcony', 'View', 'Air conditioning', 'Terrace', 'Free WiFi'],
-    amenities: {
-      kitchen: ['Refrigerator', 'Kitchenware', 'Outdoor furniture', 'Toaster', 'Microwave', 'Minibar', 'Oven', 'Dining table'],
-      bathroom: ['Bath', 'Free toiletries', 'Shower', 'Toilet', 'Slippers', 'Hairdryer', 'Additional toilet', 'Toilet paper'],
-      view: ['City view', 'Balcony', 'Terrace'],
-      facilities: ['Air conditioning', 'Flat-screen TV', 'Free WiFi', 'Desk', 'Hardwood floors', 'Seating area']
-    },
-    maxPersons: 2,
-  },
-  {
     id: 4,
     title: 'Studio with Balcony',
     subtitle: '1 extra-large double bed',
@@ -119,30 +95,6 @@ const rooms = [
       bathroom: ['Shower', 'Toilet', 'Slippers', 'Hairdryer', 'Toilet paper', 'Free toiletries'],
       view: ['City view', 'Balcony'],
       facilities: ['Air conditioning', 'Flat-screen TV', 'Free WiFi', 'Desk', 'Hardwood floors']
-    },
-    maxPersons: 2,
-  },
-  {
-    id: 5,
-    title: 'Deluxe Double Room with Balcony',
-    subtitle: '1 extra-large double bed',
-    beds: 'Room',
-    size: '45 m²',
-    price: '2,300,000',
-    originalPrice: '2,300,000',
-    image: '/deluxe_double_room_1779102139673.png',
-    images: [
-      '/deluxe_double_room_1779102139673.png',
-      '/apartment_balcony_1779102155333.png',
-      '/studio_balcony_1779102172037.png',
-      'https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg?ce=2&s=1024x768'
-    ],
-    features: ['Private kitchen', 'Private bathroom', 'Balcony', 'View', 'Air conditioning', 'Terrace', 'Free WiFi'],
-    amenities: {
-      kitchen: ['Refrigerator', 'Kitchenware', 'Outdoor furniture', 'Microwave', 'Minibar', 'Oven', 'Dining table'],
-      bathroom: ['Bath', 'Free toiletries', 'Shower', 'Toilet', 'Slippers', 'Hairdryer', 'Additional toilet', 'Toilet paper'],
-      view: ['City view', 'Balcony', 'Terrace'],
-      facilities: ['Air conditioning', 'Flat-screen TV', 'Free WiFi', 'Desk', 'Hardwood floors', 'Seating area']
     },
     maxPersons: 2,
   }
