@@ -77,7 +77,7 @@ export async function POST(request: Request) {
     const htmlContent = `
       <div style="font-family: 'Inter', -apple-system, sans-serif; color: #333; max-width: 600px; margin: 0 auto; border: 1px solid #e0e0e0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
         <div style="background-color: #1a1a1a; padding: 2rem; text-align: center; color: #fff;">
-          <h2 style="margin: 0; font-family: 'Playfair Display', serif; font-size: 1.5rem; letter-spacing: 0.05em; font-weight: 500;">NEW DIRECT BOOKING REQUEST</h2>
+          <h2 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; letter-spacing: 0.05em; font-weight: 500;">NEW DIRECT BOOKING REQUEST</h2>
           <p style="margin: 0.5rem 0 0 0; color: #d4af37; font-size: 0.875rem; text-transform: uppercase; font-weight: 600; letter-spacing: 0.1em;">10% Direct Booking Discount Applied</p>
         </div>
         
