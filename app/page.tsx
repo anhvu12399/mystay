@@ -46,9 +46,9 @@ const rooms = [
     subtitle: 'Bedroom 1: 1 extra-large double bed | Living room: 1 sofa bed',
     beds: 'Entire apartment',
     size: '45 m²',
-    price: '2,000,000',
-    originalPrice: '2,000,000',
-    usdPrice: '79',
+    price: '1,700,000',
+    originalPrice: '1,700,000',
+    usdPrice: '67',
     image: 'https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg?ce=2&s=1024x768',
     images: [
       'https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg?ce=2&s=1024x768',
