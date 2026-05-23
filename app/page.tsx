@@ -362,7 +362,7 @@ function App() {
           <a href="#about" className="navbar-link">About</a>
           <a href="#rooms" className="navbar-link">Rooms</a>
           <a href="#reviews" className="navbar-link">Reviews</a>
-          <a href="#contact" className="navbar-link">Contact</a>
+          <a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer" className="navbar-link">Contact</a>
         </div>
         
         <button 
@@ -759,7 +759,7 @@ function App() {
               <li><a href="#about">About Us</a></li>
               <li><a href="#rooms">Rooms & Suites</a></li>
               <li><a href="#reviews">Guest Reviews</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer">Contact</a></li>
             </ul>
           </div>
           
@@ -771,11 +771,15 @@ function App() {
                 139/5 Nguyễn Cư Trinh, Street, Cầu Ông Lãnh, Hồ Chí Minh 70000
               </li>
               <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                mywayapt@gmail.com
+                <a href="mailto:mywayapt@gmail.com">
+                  mywayapt@gmail.com
+                </a>
               </li>
               <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 <Phone size={16} style={{ flexShrink: 0 }}/>
-                +84 0988 600 388
+                <a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer">
+                  +84 988 600 388
+                </a>
               </li>
             </ul>
           </div>
