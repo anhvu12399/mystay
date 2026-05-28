@@ -3,19 +3,24 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Script from 'next/script';
+import { cookies } from 'next/headers';
+import type { Language } from './dictionaries';
 
 export const metadata: Metadata = {
   title: 'My Stay & Apartment',
   description: 'A luxury boutique hotel experience offering 10 premium rooms and apartments for international guests.',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const locale = (cookieStore.get('NEXT_LOCALE')?.value || 'en') as Language;
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
         {/* Google Analytics (gtag.js) */}
         <Script
