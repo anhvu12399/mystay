@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Maximize, User, Check } from 'lucide-react';
 
-export default function RoomModal({ room, onClose, onBookNow, dict }) {
+export default function RoomModal({ room, onClose, onBookNow, dict, language }) {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
   if (!room) return null;
@@ -82,7 +82,17 @@ export default function RoomModal({ room, onClose, onBookNow, dict }) {
             <div className="room-modal-footer">
               <div className="price">
                 <span style={{fontSize: '0.875rem', fontWeight: 400, color: 'var(--text-light)', display: 'block'}}>{dict.roomModal.pricePerNight}</span>
-                VND {room.price} <span style={{ fontSize: '0.9rem', color: 'var(--text-light)', fontWeight: 'normal', marginLeft: '0.5rem' }}>({dict.rooms.approx} ${room.usdPrice})</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <span>
+                    {language === 'vi' && `VND ${room.price}`}
+                    {language === 'ko' && `${dict.currency.symbol}${room.krwPrice}`}
+                    {language === 'zh' && `${dict.currency.symbol}${room.cnyPrice}`}
+                    {language === 'en' && `${dict.currency.symbol}${room.usdPrice}`}
+                  </span>
+                  {language !== 'en' && (
+                    <span style={{ fontSize: '0.9rem', color: 'var(--text-light)', fontWeight: 'normal' }}>({dict.rooms.approx} ${room.usdPrice})</span>
+                  )}
+                </div>
               </div>
               <button 
                 className="btn btn-primary" 

@@ -21,6 +21,8 @@ const rooms = [
     price: '800,000',
     originalPrice: '800,000',
     usdPrice: '31',
+    krwPrice: '37,000',
+    cnyPrice: '210',
     image: 'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916728.jpg?k=fd6882e0a2af07e107f5526cc798fae525cf39211205720d5ba3dee804519aef&o=&s=1024x',
     images: [
       'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916728.jpg?k=fd6882e0a2af07e107f5526cc798fae525cf39211205720d5ba3dee804519aef&o=&s=1024x',
@@ -51,6 +53,8 @@ const rooms = [
     price: '1,200,000',
     originalPrice: '1,200,000',
     usdPrice: '47',
+    krwPrice: '56,000',
+    cnyPrice: '315',
     image: '/images/apartment_balcony/img_1183.jpg',
     images: [
       '/images/apartment_balcony/img_1183.jpg',
@@ -87,6 +91,8 @@ const rooms = [
     price: '1,000,000',
     originalPrice: '1,000,000',
     usdPrice: '39',
+    krwPrice: '47,000',
+    cnyPrice: '260',
     image: 'https://pix8.agoda.net/hotelImages/71131100/1129048000/1abd20010e503d4d000aa308fd0a1623.jpg?ce=2&s=1024x',
     images: [
       'https://pix8.agoda.net/hotelImages/71131100/1129048000/1abd20010e503d4d000aa308fd0a1623.jpg?ce=2&s=1024x',
@@ -451,8 +457,15 @@ function App() {
                 <div className="room-footer">
                   <div className="room-price-wrap">
                     <span className="room-price-label">{dict.rooms.from}</span>
-                    <span className="room-price">VND {room.price}</span>
-                    <span className="room-price-usd" style={{ fontSize: '0.85rem', color: 'var(--text-light)', display: 'block', marginTop: '0.15rem' }}>{dict.rooms.approx} ${room.usdPrice}</span>
+                    <span className="room-price">
+                      {language === 'vi' && `VND ${room.price}`}
+                      {language === 'ko' && `${dict.currency.symbol}${room.krwPrice}`}
+                      {language === 'zh' && `${dict.currency.symbol}${room.cnyPrice}`}
+                      {language === 'en' && `${dict.currency.symbol}${room.usdPrice}`}
+                    </span>
+                    {language !== 'en' && (
+                      <span className="room-price-usd" style={{ fontSize: '0.85rem', color: 'var(--text-light)', display: 'block', marginTop: '0.15rem' }}>{dict.rooms.approx} ${room.usdPrice}</span>
+                    )}
                   </div>
                   <button 
                     className="btn btn-primary" 
@@ -806,6 +819,7 @@ function App() {
         <RoomModal 
           room={selectedRoom}
           dict={dict}
+          language={language}
           onClose={() => setSelectedRoom(null)} 
           onBookNow={(roomTitle) => {
             setBookingForm((prev) => ({ ...prev, room: roomTitle }));

@@ -2,6 +2,12 @@ export type Language = 'en' | 'vi' | 'ko' | 'zh';
 
 export const dictionaries: Record<Language, Record<string, any>> = {
   en: {
+    // Currency
+    currency: {
+      code: 'USD',
+      symbol: '$',
+      rate: 1,
+    },
     // Navigation
     nav: {
       brand: 'My Stay & Apartment',
@@ -120,6 +126,12 @@ export const dictionaries: Record<Language, Record<string, any>> = {
     },
   },
   vi: {
+    // Currency
+    currency: {
+      code: 'VND',
+      symbol: '₫',
+      rate: 1,
+    },
     // Navigation
     nav: {
       brand: 'My Stay & Apartment',
@@ -238,6 +250,12 @@ export const dictionaries: Record<Language, Record<string, any>> = {
     },
   },
   ko: {
+    // Currency
+    currency: {
+      code: 'KRW',
+      symbol: '₩',
+      rate: 1,
+    },
     // Navigation
     nav: {
       brand: 'My Stay & Apartment',
@@ -259,14 +277,36 @@ export const dictionaries: Record<Language, Record<string, any>> = {
       subtitle: '숙박시설',
       title: '저희와 함께 하세요',
       deluxeDouble: {
-        title: '디럭스 더블룸',
-        subtitle: '성인 1명 + 어린이 1명',
-        beds: '특대형 더블침대 1개 및 소파침대 1개',
+        title: '디럭스 더블 룸',
+        subtitle: '1명 + 1명',
+        beds: '1개의 초대형 더블 침대 및 1개의 소파 침대',
         size: '30 m²',
-        price: '800,000',
+        price: '37,000',
         usdPrice: '31',
-        features: ['개인 주방', '개인 욕실', '뷰', '에어컨', '평면 TV', '무료 WiFi'],
+        krwPrice: '37,000',
+        features: ['개인 주방', '개인 욕실', '전망', '에어컨', '플랫스크린 TV', '무료 WiFi'],
         badge: '인기',
+      },
+      apartmentBalcony: {
+        title: '발코니가 있는 아파트',
+        subtitle: '침실 1: 1개의 초대형 더블 침대 | 거실: 1개의 소파 침대',
+        beds: '전체 아파트',
+        size: '45 m²',
+        price: '56,000',
+        usdPrice: '47',
+        krwPrice: '56,000',
+        features: ['개인 주방', '인접 욕실', '발코니', '전망', '에어컨', '테라스', '무료 WiFi'],
+        badge: '프리미엄',
+      },
+      studioBalcony: {
+        title: '발코니가 있는 스튜디오',
+        subtitle: '1개의 초대형 더블 침대',
+        beds: '전체 스튜디오',
+        size: '30 m²',
+        price: '47,000',
+        usdPrice: '39',
+        krwPrice: '47,000',
+        features: ['개인 주방', '개인 욕실', '발코니', '전망', '에어컨', '무료 WiFi'],
       },
       apartmentBalcony: {
         title: '발코니가 있는 아파트',
@@ -356,6 +396,12 @@ export const dictionaries: Record<Language, Record<string, any>> = {
     },
   },
   zh: {
+    // Currency
+    currency: {
+      code: 'CNY',
+      symbol: '¥',
+      rate: 1,
+    },
     // Navigation
     nav: {
       brand: 'My Stay & Apartment',
@@ -377,14 +423,36 @@ export const dictionaries: Record<Language, Record<string, any>> = {
       subtitle: '我们的住宿',
       title: '与我们一起入住',
       deluxeDouble: {
-        title: '豪华双人房',
-        subtitle: '1名成人+1名儿童',
-        beds: '1张特大号双人床和1张沙发床',
+        title: '豪华双人间',
+        subtitle: '1个成人 + 1个儿童',
+        beds: '1张特大双人床和1张沙发床',
         size: '30 m²',
-        price: '800,000',
+        price: '210',
         usdPrice: '31',
-        features: ['独立厨房', '独立浴室', '景观', '空调', '平面电视', '免费WiFi'],
+        cnyPrice: '210',
+        features: ['私人厨房', '私人浴室', '景观', '空调', '平板电视', '免费 WiFi'],
         badge: '热门',
+      },
+      apartmentBalcony: {
+        title: '带阳台的公寓',
+        subtitle: '卧室 1: 1张特大双人床 | 客厅: 1张沙发床',
+        beds: '整个公寓',
+        size: '45 m²',
+        price: '315',
+        usdPrice: '47',
+        cnyPrice: '315',
+        features: ['私人厨房', '配套浴室', '阳台', '景观', '空调', '露台', '免费 WiFi'],
+        badge: '高级',
+      },
+      studioBalcony: {
+        title: '带阳台的工作室',
+        subtitle: '1张特大双人床',
+        beds: '整个工作室',
+        size: '30 m²',
+        price: '260',
+        usdPrice: '39',
+        cnyPrice: '260',
+        features: ['私人厨房', '私人浴室', '阳台', '景观', '空调', '免费 WiFi'],
       },
       apartmentBalcony: {
         title: '带阳台的公寓',
