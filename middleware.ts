@@ -1,4 +1,4 @@
-// Next.js Middleware for multi-language routing and browser detection - Vercel Connected Build
+// Next.js Middleware for multi-language routing and browser detection - Public Repo Build
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
