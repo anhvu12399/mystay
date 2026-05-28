@@ -1,4 +1,4 @@
-// Next.js Middleware for automatic multi-language routing and browser locale fallback
+// Next.js Middleware for multi-language routing and browser detection - Vercel Connected Build
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
