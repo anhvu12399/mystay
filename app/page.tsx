@@ -234,6 +234,28 @@ function App() {
   const [language, setLanguage] = useState<Language>('en');
   const dict = getDictionary(language);
 
+  // Helper function to get translated room data
+  const getTranslatedRoom = (baseRoom: any) => {
+    let roomData: any;
+    if (baseRoom.id === 1) {
+      roomData = dict.rooms.deluxeDouble;
+    } else if (baseRoom.id === 2) {
+      roomData = dict.rooms.apartmentBalcony;
+    } else if (baseRoom.id === 4) {
+      roomData = dict.rooms.studioBalcony;
+    }
+    
+    if (!roomData) return baseRoom;
+    
+    return {
+      ...baseRoom,
+      displayTitle: roomData.title,
+      displaySubtitle: roomData.subtitle,
+      displayBeds: roomData.beds,
+      amenities: roomData.amenities || baseRoom.amenities,
+    };
+  };
+
   const [bookingForm, setBookingForm] = useState({
     name: '',
     email: '',
@@ -424,20 +446,22 @@ function App() {
         </div>
 
         <div className="rooms-grid">
-          {rooms.map((room) => (
-            <div key={room.id} className="room-card" onClick={() => setSelectedRoom(room)} style={{ cursor: 'pointer' }}>
+          {rooms.map((room) => {
+            const translatedRoom = getTranslatedRoom(room);
+            return (
+            <div key={room.id} className="room-card" onClick={() => setSelectedRoom(translatedRoom)} style={{ cursor: 'pointer' }}>
               <div className="room-image-wrap">
-                <img src={room.image} alt={room.title} className="room-image" />
+                <img src={room.image} alt={translatedRoom.displayTitle} className="room-image" />
                 <div className="view-photos-overlay">
                   <ImageIcon size={14} /> {dict.rooms.viewPhotos}
                 </div>
-                {room.badge && <span className="room-badge">{room.badge}</span>}
+                {translatedRoom.displayTitle && <span className="room-badge">{translatedRoom.amenities?.facilities?.[0] || 'Featured'}</span>}
               </div>
               
               <div className="room-content">
-                <h3 className="room-title">{room.title}</h3>
+                <h3 className="room-title">{translatedRoom.displayTitle}</h3>
                 <p className="mb-4" style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}>
-                  {room.subtitle} <br/> {room.beds}
+                  {translatedRoom.displaySubtitle} <br/> {translatedRoom.displayBeds}
                 </p>
                 
                 <div className="room-meta">
@@ -481,7 +505,8 @@ function App() {
                 </div>
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
       </section>
 

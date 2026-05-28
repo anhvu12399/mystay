@@ -40,11 +40,11 @@ export default function RoomModal({ room, onClose, onBookNow, dict, language }) 
 
           {/* Right: Details */}
           <div className="room-modal-info">
-            <h2 className="room-modal-title">{room.title}</h2>
+            <h2 className="room-modal-title">{room.displayTitle || room.title}</h2>
             <div className="room-modal-meta">
               <span><Maximize size={16} /> {room.size}</span>
               <span><User size={16} /> {dict.rooms.maxPersons} {room.maxPersons}</span>
-              {room.beds && <span>🛏️ {room.beds}</span>}
+              {room.displayBeds && <span>🛏️ {room.displayBeds}</span>}
             </div>
 
             <p className="room-modal-desc">
