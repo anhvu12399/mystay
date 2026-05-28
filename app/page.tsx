@@ -1,7 +1,9 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { User, Maximize, MapPin, Star, Menu, X, ArrowRight, Smile, Frown, Image as ImageIcon, ChevronLeft, ChevronRight, ChevronDown, Phone, Calendar, Mail, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { User, Maximize, MapPin, Star, Menu, X, Smile, Frown, Image as ImageIcon, ChevronLeft, ChevronRight, ChevronDown, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import RoomModal from '../components/RoomModal';
+import LanguageSwitcher from '../components/LanguageSwitcher';
+import { getTranslation, Locale } from './translations';
 
 const heroImages = [
   "https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg",
@@ -218,6 +220,7 @@ const countries = [
 ];
 
 function App() {
+  const [locale, setLocale] = useState<Locale>('en');
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<any>(null);
@@ -246,6 +249,20 @@ function App() {
       phone: phoneLocal.trim() ? `${selectedCountry.code} ${phoneLocal.trim()}` : ''
     }));
   }, [selectedCountry, phoneLocal]);
+
+  // Read current locale cookie on mount
+  useEffect(() => {
+    const getCookie = (name: string): string => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(';').shift() || 'en';
+      return 'en';
+    };
+    const cookieLocale = getCookie('NEXT_LOCALE') as Locale;
+    if (cookieLocale && ['en', 'vi', 'ko', 'zh'].includes(cookieLocale)) {
+      setLocale(cookieLocale);
+    }
+  }, []);
 
   // Click outside handler for country selector dropdown
   useEffect(() => {
@@ -284,7 +301,7 @@ function App() {
       setBookingStatus({
         loading: false,
         success: false,
-        error: 'Check-out date must be later than check-in date.'
+        error: getTranslation('dateError', locale)
       });
       return;
     }
@@ -350,22 +367,17 @@ function App() {
   return (
     <>
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-        <a href="#" className="navbar-brand">My Stay & Apartment</a>
+        <a href="#" className="navbar-brand">{getTranslation('brandName', locale)}</a>
         
-        <div className="navbar-links">
-          <a href="#about" className="navbar-link">About</a>
-          <a href="#rooms" className="navbar-link">Rooms</a>
-          <a href="#reviews" className="navbar-link">Reviews</a>
-          <a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer" className="navbar-link">Contact</a>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          <div className="navbar-links">
+            <a href="#about" className="navbar-link">{getTranslation('navAbout', locale)}</a>
+            <a href="#rooms" className="navbar-link">{getTranslation('navRooms', locale)}</a>
+            <a href="#reviews" className="navbar-link">{getTranslation('navReviews', locale)}</a>
+            <a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer" className="navbar-link">{getTranslation('navContact', locale)}</a>
+          </div>
+          <LanguageSwitcher />
         </div>
-        
-        <button 
-          className="mobile-menu-btn" 
-          style={{ display: 'none' }} // Assuming handled by media query in a real setup, but keeping simple here
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-          {mobileMenuOpen ? <X color={scrolled ? '#1a1a1a' : '#fff'} /> : <Menu color={scrolled ? '#1a1a1a' : '#fff'} />}
-        </button>
       </nav>
 
       <header className="hero">
@@ -383,58 +395,58 @@ function App() {
           />
         ))}
         <div className="hero-content">
-          <span className="hero-subtitle">Boutique Luxury</span>
-          <h1 className="hero-title">Experience Unparalleled Comfort</h1>
+          <span className="hero-subtitle">{getTranslation('heroSubtitle', locale)}</span>
+          <h1 className="hero-title">{getTranslation('heroTitle', locale)}</h1>
           <p className="hero-text">
-            An exclusive collection of 10 meticulously designed rooms and apartments tailored for the modern traveler. 
-            <strong> Book directly with us to unlock an exclusive 10% discount on your stay!</strong>
+            {getTranslation('heroText', locale)}
+            <strong style={{ display: 'block', marginTop: '0.5rem' }}> {getTranslation('heroPromo', locale)}</strong>
           </p>
-          <a href="#rooms" className="btn btn-primary">Discover Our Rooms</a>
+          <a href="#rooms" className="btn btn-primary">{getTranslation('heroButton', locale)}</a>
         </div>
       </header>
 
       <section id="rooms" className="container py-16">
         <div className="section-header">
-          <span className="section-subtitle">Our Accommodations</span>
-          <h2 className="section-title">Stay With Us</h2>
+          <span className="section-subtitle">{getTranslation('sectionAccommodationsSubtitle', locale)}</span>
+          <h2 className="section-title">{getTranslation('sectionAccommodationsTitle', locale)}</h2>
         </div>
 
         <div className="rooms-grid">
           {rooms.map((room) => (
             <div key={room.id} className="room-card" onClick={() => setSelectedRoom(room)} style={{ cursor: 'pointer' }}>
               <div className="room-image-wrap">
-                <img src={room.image} alt={room.title} className="room-image" />
+                <img src={room.image} alt={getTranslation(room.title, locale)} className="room-image" />
                 <div className="view-photos-overlay">
-                  <ImageIcon size={14} /> View Photos
+                  <ImageIcon size={14} /> {getTranslation('viewPhotos', locale)}
                 </div>
-                {room.badge && <span className="room-badge">{room.badge}</span>}
+                {room.badge && <span className="room-badge">{getTranslation(room.badge, locale)}</span>}
               </div>
               
               <div className="room-content">
-                <h3 className="room-title">{room.title}</h3>
+                <h3 className="room-title">{getTranslation(room.title, locale)}</h3>
                 <p className="mb-4" style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}>
-                  {room.subtitle} <br/> {room.beds}
+                  {getTranslation(room.subtitle, locale)} <br/> {getTranslation(room.beds, locale)}
                 </p>
                 
                 <div className="room-meta">
                   <span><Maximize size={16} /> {room.size}</span>
-                  <span><User size={16} /> Max {room.maxPersons}</span>
+                  <span><User size={16} /> {getTranslation('max', locale)} {room.maxPersons}</span>
                 </div>
                 
                 <div className="room-features">
                   <ul className="room-features-list">
                     {room.features.slice(0, 4).map((feature, idx) => (
-                      <li key={idx}>{feature}</li>
+                      <li key={idx}>{getTranslation(feature, locale)}</li>
                     ))}
-                    {room.features.length > 4 && <li>+{room.features.length - 4} more</li>}
+                    {room.features.length > 4 && <li>+{room.features.length - 4} {getTranslation('more', locale)}</li>}
                   </ul>
                 </div>
                 
                 <div className="room-footer">
                   <div className="room-price-wrap">
-                    <span className="room-price-label">From</span>
+                    <span className="room-price-label">{getTranslation('from', locale)}</span>
                     <span className="room-price">VND {room.price}</span>
-                    <span className="room-price-usd" style={{ fontSize: '0.85rem', color: 'var(--text-light)', display: 'block', marginTop: '0.15rem' }}>approx. ${room.usdPrice}</span>
+                    <span className="room-price-usd" style={{ fontSize: '0.85rem', color: 'var(--text-light)', display: 'block', marginTop: '0.15rem' }}>{getTranslation('approx', locale)} ${room.usdPrice}</span>
                   </div>
                   <button 
                     className="btn btn-primary" 
@@ -445,7 +457,7 @@ function App() {
                       document.getElementById('book-direct')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                   >
-                    Book Now
+                    {getTranslation('bookNow', locale)}
                   </button>
                 </div>
               </div>
@@ -457,8 +469,8 @@ function App() {
       <section id="reviews" className="reviews-section py-16">
         <div className="container">
           <div className="section-header">
-            <span className="section-subtitle">Guest Experiences</span>
-            <h2 className="section-title">What They Say</h2>
+            <span className="section-subtitle">{getTranslation('guestExperiencesSubtitle', locale)}</span>
+            <h2 className="section-title">{getTranslation('guestExperiencesTitle', locale)}</h2>
           </div>
           
           <div className="reviews-slider-container" style={{ position: 'relative' }}>
@@ -528,7 +540,7 @@ function App() {
           </div>
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
             <a href="https://www.booking.com/hotel/vn/my-way.en-gb.html?aid=356980&label=gog235jc-10CAso9AFCBm15LXdheUgzWANo9AGIAQGYATO4AQfIAQ3YAQPoAQH4AQGIAgGoAgG4AtDiq9AGwAIB0gIkNmNjYmMwZWMtNjM2Yi00OTFiLTg1MjEtZWYxMjRlMzVjNzUy2AIB4AIB&sid=3493809436101eb78759c1da9f70d4ae&all_sr_blocks=914487502_363026539_2_0_0&checkin=2026-05-19&checkout=2026-05-20&dest_id=-3730078&dest_type=city&dist=0&group_adults=2&group_children=0&hapos=1&highlighted_blocks=914487502_363026539_2_0_0&hpos=1&matching_block_id=914487502_363026539_2_0_0&no_rooms=1&req_adults=2&req_children=0&room1=A%2CA&sb_price_type=total&sr_order=popularity&sr_pri_blocks=914487502_363026539_2_0_0__100000000&srepoch=1779102037&srpvid=1a214d68b1ea0de7&type=total&ucfs=1&#tab-reviews" target="_blank" rel="noopener noreferrer" className="btn btn-outline" style={{ display: 'inline-flex', padding: '1rem 3rem', borderColor: '#003580', color: '#003580', fontWeight: 600 }}>
-              View All Reviews on Booking.com
+              {getTranslation('viewAllReviews', locale)}
             </a>
           </div>
         </div>
@@ -537,11 +549,10 @@ function App() {
       <section id="book-direct" className="booking-section py-16">
         <div className="container">
           <div className="section-header">
-            <span className="section-subtitle">Secure Your Apartment</span>
-            <h2 className="section-title">Book Direct & Save 10%</h2>
+            <span className="section-subtitle">{getTranslation('secureApartmentSubtitle', locale)}</span>
+            <h2 className="section-title">{getTranslation('secureApartmentTitle', locale)}</h2>
             <p className="section-desc" style={{ maxWidth: '600px', margin: '0 auto', color: 'var(--text-light)', fontSize: '0.95rem' }}>
-              Enjoy our guaranteed best rates and an exclusive direct booking discount. 
-              Fill out this quick reservation inquiry and our reservation team will contact you within 3 hours.
+              {getTranslation('secureApartmentDesc', locale)}
             </p>
           </div>
 
@@ -549,7 +560,7 @@ function App() {
             <form onSubmit={handleBookingSubmit} className="booking-form-el">
               <div className="booking-grid">
                 <div className="form-group">
-                  <label htmlFor="booking-name">Full Name</label>
+                  <label htmlFor="booking-name">{getTranslation('fullName', locale)}</label>
                   <input
                     type="text"
                     id="booking-name"
@@ -562,7 +573,7 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="booking-email">Email Address</label>
+                  <label htmlFor="booking-email">{getTranslation('emailAddress', locale)}</label>
                   <input
                     type="email"
                     id="booking-email"
@@ -575,7 +586,7 @@ function App() {
                 </div>
 
                 <div className="form-group" style={{ position: 'relative' }}>
-                  <label htmlFor="booking-phone">Phone Number</label>
+                  <label htmlFor="booking-phone">{getTranslation('phoneNumber', locale)}</label>
                   <div className="phone-input-wrapper">
                     <button
                       type="button"
@@ -648,21 +659,21 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="booking-room">Select Apartment</label>
+                  <label htmlFor="booking-room">{getTranslation('selectApartment', locale)}</label>
                   <select
                     id="booking-room"
                     value={bookingForm.room}
                     onChange={(e) => setBookingForm({ ...bookingForm, room: e.target.value })}
                     required
                   >
-                    <option value="Deluxe Double Room">Deluxe Double Room</option>
-                    <option value="Apartment with Balcony">Apartment with Balcony</option>
-                    <option value="Studio with Balcony">Studio with Balcony</option>
+                    <option value="Deluxe Double Room">{getTranslation('Deluxe Double Room', locale)}</option>
+                    <option value="Apartment with Balcony">{getTranslation('Apartment with Balcony', locale)}</option>
+                    <option value="Studio with Balcony">{getTranslation('Studio with Balcony', locale)}</option>
                   </select>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="booking-checkin">Check-in Date</label>
+                  <label htmlFor="booking-checkin">{getTranslation('checkInDate', locale)}</label>
                   <input
                     type="date"
                     id="booking-checkin"
@@ -674,7 +685,7 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="booking-checkout">Check-out Date</label>
+                  <label htmlFor="booking-checkout">{getTranslation('checkOutDate', locale)}</label>
                   <input
                     type="date"
                     id="booking-checkout"
@@ -687,13 +698,13 @@ function App() {
               </div>
 
               <div className="form-group full-width mt-4">
-                <label htmlFor="booking-requests">Special Requests (Optional)</label>
+                <label htmlFor="booking-requests">{getTranslation('specialRequests', locale)}</label>
                 <textarea
                   id="booking-requests"
                   rows={3}
                   value={bookingForm.requests}
                   onChange={(e) => setBookingForm({ ...bookingForm, requests: e.target.value })}
-                  placeholder="e.g., Airport pick-up, preferred check-in time, twin beds setup..."
+                  placeholder={getTranslation('requestsPlaceholder', locale)}
                 ></textarea>
               </div>
 
@@ -704,10 +715,10 @@ function App() {
                   className="btn btn-primary btn-submit-booking"
                 >
                   {bookingStatus.loading ? (
-                    'Processing Booking...'
+                    getTranslation('processingBooking', locale)
                   ) : (
                     <>
-                      Reserve Direct & Save 10% <Send size={16} style={{ marginLeft: '8px' }} />
+                      {getTranslation('submitBooking', locale)} <Send size={16} style={{ marginLeft: '8px' }} />
                     </>
                   )}
                 </button>
@@ -717,7 +728,7 @@ function App() {
                 <div className="booking-alert success mt-4">
                   <CheckCircle size={20} style={{ flexShrink: 0 }} />
                   <div>
-                    <strong>Request sent successfully!</strong> We've locked in your 10% direct discount. Our reservations desk will email you to finalize check-in times and payment details within the next 3 hours.
+                    {getTranslation('successAlert', locale)}
                   </div>
                 </div>
               )}
@@ -737,32 +748,32 @@ function App() {
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor">
           <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
         </svg>
-        <span className="whatsapp-text">Text us to get 10% off!</span>
+        <span className="whatsapp-text">{getTranslation('whatsappFloat', locale)}</span>
       </a>
 
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-brand">
-            <h3>My Stay & Apartment</h3>
-            <p>A luxury boutique hotel experience offering 10 premium rooms and apartments for international guests.</p>
+            <h3>{getTranslation('brandName', locale)}</h3>
+            <p>{getTranslation('footerDesc', locale)}</p>
           </div>
           
           <div className="footer-links">
-            <h4>Explore</h4>
+            <h4>{getTranslation('footerExplore', locale)}</h4>
             <ul>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#rooms">Rooms & Suites</a></li>
-              <li><a href="#reviews">Guest Reviews</a></li>
-              <li><a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer">Contact</a></li>
+              <li><a href="#about">{getTranslation('footerAboutUs', locale)}</a></li>
+              <li><a href="#rooms">{getTranslation('footerRoomsSuites', locale)}</a></li>
+              <li><a href="#reviews">{getTranslation('footerGuestReviews', locale)}</a></li>
+              <li><a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer">{getTranslation('footerContact', locale)}</a></li>
             </ul>
           </div>
           
           <div className="footer-links">
-            <h4>Contact</h4>
+            <h4>{getTranslation('footerContact', locale)}</h4>
             <ul>
               <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
                 <MapPin size={18} style={{ flexShrink: 0, marginTop: '2px' }}/>
-                139/5 Nguyễn Cư Trinh, Street, Cầu Ông Lãnh, Hồ Chí Minh 70000
+                {getTranslation('footerAddress', locale)}
               </li>
               <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 <a href="mailto:mywayapt@gmail.com">
@@ -770,7 +781,6 @@ function App() {
                 </a>
               </li>
               <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                <Phone size={16} style={{ flexShrink: 0 }}/>
                 <a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer">
                   +84 988 600 388
                 </a>
@@ -780,7 +790,7 @@ function App() {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} My Stay & Apartment. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {getTranslation('brandName', locale)}. {getTranslation('footerAllRights', locale)}</p>
         </div>
       </footer>
 
@@ -788,6 +798,7 @@ function App() {
       {selectedRoom && (
         <RoomModal 
           room={selectedRoom} 
+          locale={locale}
           onClose={() => setSelectedRoom(null)} 
           onBookNow={(roomTitle) => {
             setBookingForm((prev) => ({ ...prev, room: roomTitle }));
