@@ -13,7 +13,7 @@ export default function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Priority 1: Check URL param ?lang=
+  // Priority 1: Check URL param ?lang= (e.g., from Google Ads)
   const urlLangParam = request.nextUrl.searchParams.get('lang');
   if (urlLangParam && ['en', 'vi', 'ko', 'zh'].includes(urlLangParam)) {
     const response = NextResponse.next();
@@ -35,7 +35,30 @@ export default function middleware(request: NextRequest) {
     return response;
   }
 
-  // Priority 3: Check Accept-Language header
+  // Priority 3: Check Vercel Geo-IP detection
+  const country = request.geo?.country;
+  let geoLang: string | null = null;
+
+  if (country === 'VN') {
+    geoLang = 'vi';
+  } else if (country === 'KR') {
+    geoLang = 'ko';
+  } else if (country === 'CN') {
+    geoLang = 'zh';
+  }
+
+  if (geoLang) {
+    const response = NextResponse.next();
+    response.cookies.set('NEXT_LOCALE', geoLang, {
+      maxAge: 60 * 60 * 24 * 365,
+      path: '/',
+      sameSite: 'lax',
+    });
+    response.headers.set('x-locale', geoLang);
+    return response;
+  }
+
+  // Priority 4: Check Accept-Language header
   const acceptLanguage = request.headers.get('accept-language') || '';
   let detectedLang = 'en'; // Default fallback
 
