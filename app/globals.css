@@ -839,7 +839,17 @@ button {
   }
   
   .navbar-links {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  .navbar-links a {
     display: none;
+  }
+  
+  .navbar-links .language-switcher {
+    display: block;
   }
   
   .rooms-grid {
