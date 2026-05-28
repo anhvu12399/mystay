@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { User, Maximize, MapPin, Star, Menu, X, Smile, Frown, Image as ImageIcon, ChevronLeft, ChevronRight, ChevronDown, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import RoomModal from '../components/RoomModal';
 import LanguageSwitcher from '../components/LanguageSwitcher';
-import { getTranslation, Locale } from './translations';
+import { getTranslation, getFormattedPrice, Locale } from './translations';
 
 const heroImages = [
   "https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg",
@@ -445,8 +445,8 @@ function App() {
                 <div className="room-footer">
                   <div className="room-price-wrap">
                     <span className="room-price-label">{getTranslation('from', locale)}</span>
-                    <span className="room-price">VND {room.price}</span>
-                    <span className="room-price-usd" style={{ fontSize: '0.85rem', color: 'var(--text-light)', display: 'block', marginTop: '0.15rem' }}>{getTranslation('approx', locale)} ${room.usdPrice}</span>
+                    <span className="room-price">{getFormattedPrice(room.usdPrice, room.price, locale).primary}</span>
+                    <span className="room-price-usd" style={{ fontSize: '0.85rem', color: 'var(--text-light)', display: 'block', marginTop: '0.15rem' }}>{getFormattedPrice(room.usdPrice, room.price, locale).secondary}</span>
                   </div>
                   <button 
                     className="btn btn-primary" 

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Maximize, User, Check } from 'lucide-react';
-import { getTranslation, Locale } from '../app/translations';
+import { getTranslation, getFormattedPrice, Locale } from '../app/translations';
 
 interface RoomModalProps {
   room: any;
@@ -96,7 +96,7 @@ export default function RoomModal({ room, locale, onClose, onBookNow }: RoomModa
             <div className="room-modal-footer">
               <div className="price">
                 <span style={{fontSize: '0.875rem', fontWeight: 400, color: 'var(--text-light)', display: 'block'}}>{getTranslation('pricePerNight', locale)}</span>
-                VND {room.price} <span style={{ fontSize: '0.9rem', color: 'var(--text-light)', fontWeight: 'normal', marginLeft: '0.5rem' }}>({getTranslation('approx', locale)} ${room.usdPrice})</span>
+                {getFormattedPrice(room.usdPrice, room.price, locale).primary} <span style={{ fontSize: '0.9rem', color: 'var(--text-light)', fontWeight: 'normal', marginLeft: '0.5rem' }}>({getFormattedPrice(room.usdPrice, room.price, locale).secondary})</span>
               </div>
               <button 
                 className="btn btn-primary" 

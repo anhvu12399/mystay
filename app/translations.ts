@@ -446,3 +446,51 @@ export function getTranslation(key: string, locale: Locale): string {
   // 3. Fallback to key itself (acts as English default)
   return key;
 }
+
+export interface FormattedPrice {
+  primary: string;
+  secondary: string;
+}
+
+export function getFormattedPrice(usdPriceStr: string, vndPriceStr: string, locale: Locale): FormattedPrice {
+  const usdPrice = Number(usdPriceStr);
+  
+  switch (locale) {
+    case 'vi':
+      return {
+        primary: `VND ${vndPriceStr}`,
+        secondary: `khoảng $${usdPriceStr}`
+      };
+      
+    case 'en':
+      return {
+        primary: `$${usdPriceStr}`,
+        secondary: `approx. ${vndPriceStr} VND`
+      };
+      
+    case 'ko': {
+      // 1 USD = 1,380 KRW, round to nearest 1,000 Won for clean display
+      const krwPrice = Math.round((usdPrice * 1380) / 1000) * 1000;
+      return {
+        primary: `₩ ${krwPrice.toLocaleString('en-US')}`,
+        secondary: `약 $${usdPriceStr} (approx. ${vndPriceStr} VND)`
+      };
+    }
+      
+    case 'zh': {
+      // 1 USD = 7.25 CNY, round to integer
+      const cnyPrice = Math.round(usdPrice * 7.25);
+      return {
+        primary: `¥ ${cnyPrice.toLocaleString('en-US')}`,
+        secondary: `约 $${usdPriceStr} (approx. ${vndPriceStr} VND)`
+      };
+    }
+      
+    default:
+      return {
+        primary: `$${usdPriceStr}`,
+        secondary: `approx. ${vndPriceStr} VND`
+      };
+  }
+}
+
