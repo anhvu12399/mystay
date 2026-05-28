@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight, Maximize, User, Check } from 'lucide-react';
 
-export default function RoomModal({ room, onClose, onBookNow }) {
+export default function RoomModal({ room, onClose, onBookNow, dict }) {
   const [currentImageIdx, setCurrentImageIdx] = useState(0);
 
   if (!room) return null;
@@ -43,19 +43,19 @@ export default function RoomModal({ room, onClose, onBookNow }) {
             <h2 className="room-modal-title">{room.title}</h2>
             <div className="room-modal-meta">
               <span><Maximize size={16} /> {room.size}</span>
-              <span><User size={16} /> Max {room.maxPersons}</span>
+              <span><User size={16} /> {dict.rooms.maxPersons} {room.maxPersons}</span>
               {room.beds && <span>🛏️ {room.beds}</span>}
             </div>
 
             <p className="room-modal-desc">
-              <strong>Excellent 8.9</strong> – Based on 49 reviews. <br/><br/>
-              This spacious room provides air conditioning, a private entrance, as well as a private bathroom featuring a bath and a shower. In the kitchen, guests will find a refrigerator, kitchenware, an oven and a microwave.
+              <strong>{dict.roomModal.excellent}</strong> – {dict.roomModal.basedOnReviews}. <br/><br/>
+              {dict.roomModal.description}
             </p>
 
             <div className="room-modal-amenities">
               {room.amenities?.kitchen && (
                 <div className="amenity-group">
-                  <h4>In your private kitchen:</h4>
+                  <h4>{dict.roomModal.inYourPrivateKitchen}</h4>
                   <ul>
                     {room.amenities.kitchen.map((item, i) => <li key={i}><Check size={14} color="#003580"/> {item}</li>)}
                   </ul>
@@ -63,7 +63,7 @@ export default function RoomModal({ room, onClose, onBookNow }) {
               )}
               {room.amenities?.bathroom && (
                 <div className="amenity-group">
-                  <h4>In your private bathroom:</h4>
+                  <h4>{dict.roomModal.inYourPrivateBathroom}</h4>
                   <ul>
                     {room.amenities.bathroom.map((item, i) => <li key={i}><Check size={14} color="#003580"/> {item}</li>)}
                   </ul>
@@ -71,7 +71,7 @@ export default function RoomModal({ room, onClose, onBookNow }) {
               )}
               {room.amenities?.facilities && (
                 <div className="amenity-group">
-                  <h4>Facilities:</h4>
+                  <h4>{dict.roomModal.facilities}</h4>
                   <ul>
                     {room.amenities.facilities.map((item, i) => <li key={i}><Check size={14} color="#003580"/> {item}</li>)}
                   </ul>
@@ -81,8 +81,8 @@ export default function RoomModal({ room, onClose, onBookNow }) {
 
             <div className="room-modal-footer">
               <div className="price">
-                <span style={{fontSize: '0.875rem', fontWeight: 400, color: 'var(--text-light)', display: 'block'}}>Price per night</span>
-                VND {room.price} <span style={{ fontSize: '0.9rem', color: 'var(--text-light)', fontWeight: 'normal', marginLeft: '0.5rem' }}>(approx. ${room.usdPrice})</span>
+                <span style={{fontSize: '0.875rem', fontWeight: 400, color: 'var(--text-light)', display: 'block'}}>{dict.roomModal.pricePerNight}</span>
+                VND {room.price} <span style={{ fontSize: '0.9rem', color: 'var(--text-light)', fontWeight: 'normal', marginLeft: '0.5rem' }}>({dict.rooms.approx} ${room.usdPrice})</span>
               </div>
               <button 
                 className="btn btn-primary" 
@@ -92,7 +92,7 @@ export default function RoomModal({ room, onClose, onBookNow }) {
                   onClose();
                 }}
               >
-                Book Now
+                {dict.roomModal.bookNow}
               </button>
             </div>
           </div>

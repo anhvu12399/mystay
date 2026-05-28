@@ -423,7 +423,7 @@ function App() {
               <div className="room-image-wrap">
                 <img src={room.image} alt={room.title} className="room-image" />
                 <div className="view-photos-overlay">
-                  <ImageIcon size={14} /> View Photos
+                  <ImageIcon size={14} /> {dict.rooms.viewPhotos}
                 </div>
                 {room.badge && <span className="room-badge">{room.badge}</span>}
               </div>
@@ -804,7 +804,8 @@ function App() {
       {/* Room Detail Modal */}
       {selectedRoom && (
         <RoomModal 
-          room={selectedRoom} 
+          room={selectedRoom}
+          dict={dict}
           onClose={() => setSelectedRoom(null)} 
           onBookNow={(roomTitle) => {
             setBookingForm((prev) => ({ ...prev, room: roomTitle }));

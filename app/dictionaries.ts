@@ -91,6 +91,17 @@ export const dictionaries: Record<Language, Record<string, any>> = {
       searchCountry: 'Search country...',
       noCountriesFound: 'No countries found',
     },
+    // Room Modal
+    roomModal: {
+      pricePerNight: 'Price per night',
+      bookNow: 'Book Now',
+      inYourPrivateKitchen: 'In your private kitchen:',
+      inYourPrivateBathroom: 'In your private bathroom:',
+      facilities: 'Facilities:',
+      excellent: 'Excellent 8.9',
+      basedOnReviews: 'Based on 49 reviews',
+      description: 'This spacious room provides air conditioning, a private entrance, as well as a private bathroom featuring a bath and a shower. In the kitchen, guests will find a refrigerator, kitchenware, an oven and a microwave.',
+    },
     // Footer
     footer: {
       brand: 'My Stay & Apartment',
@@ -197,6 +208,17 @@ export const dictionaries: Record<Language, Record<string, any>> = {
       submitError: 'Có điều gì đó không ổn. Vui lòng thử lại.',
       searchCountry: 'Tìm kiếm quốc gia...',
       noCountriesFound: 'Không tìm thấy quốc gia nào',
+    },
+    // Room Modal
+    roomModal: {
+      pricePerNight: 'Giá mỗi đêm',
+      bookNow: 'Đặt ngay',
+      inYourPrivateKitchen: 'Trong bếp riêng của bạn:',
+      inYourPrivateBathroom: 'Trong phòng tắm riêng của bạn:',
+      facilities: 'Tiện nghi:',
+      excellent: 'Tuyệt vời 8.9',
+      basedOnReviews: 'Dựa trên 49 đánh giá',
+      description: 'Phòng rộng rãi này cung cấp điều hòa không khí, lối vào riêng, cũng như phòng tắm riêng với bồn tắm và vòi sen. Trong bếp, du khách sẽ tìm thấy tủ lạnh, dụng cụ nhà bếp, lò nướng và lò vi sóng.',
     },
     // Footer
     footer: {
@@ -305,6 +327,17 @@ export const dictionaries: Record<Language, Record<string, any>> = {
       searchCountry: '국가 검색...',
       noCountriesFound: '찾은 국가 없음',
     },
+    // Room Modal
+    roomModal: {
+      pricePerNight: '1박 요금',
+      bookNow: '지금 예약',
+      inYourPrivateKitchen: '개인 주방에서:',
+      inYourPrivateBathroom: '개인 욕실에서:',
+      facilities: '시설:',
+      excellent: '훌륭함 8.9',
+      basedOnReviews: '49개 리뷰 기반',
+      description: '이 넓은 객실은 에어컨, 전용 입구, 욕조와 샤워 시설이 갖춰진 전용 욕실을 제공합니다. 주방에는 냉장고, 주방 용품, 오븐 및 전자레인지가 있습니다.',
+    },
     // Footer
     footer: {
       brand: 'My Stay & Apartment',
@@ -391,7 +424,7 @@ export const dictionaries: Record<Language, Record<string, any>> = {
     booking: {
       subtitle: '预订您的公寓',
       title: '直接预订并节省10%',
-      description: '享受我们保证的最优价格和独家直接预订折扣。填写此快速预订查询表，我们的预订团队将在3小时内与您联系。',
+      description: '享受我们保证的最优价格和独家直接��订折扣。填写此快速预订查询表，我们的预订团队将在3小时内与您联系。',
       fullName: '全名',
       fullNamePlaceholder: '例如：John Doe',
       email: '电子邮件地址',
@@ -411,6 +444,17 @@ export const dictionaries: Record<Language, Record<string, any>> = {
       submitError: '出了点问题。请重试。',
       searchCountry: '搜索国家...',
       noCountriesFound: '未找到国家',
+    },
+    // Room Modal
+    roomModal: {
+      pricePerNight: '每晚价格',
+      bookNow: '立即预订',
+      inYourPrivateKitchen: '在您的私人厨房中：',
+      inYourPrivateBathroom: '在您的私人浴室中：',
+      facilities: '设施：',
+      excellent: '优秀 8.9',
+      basedOnReviews: '基于49条评论',
+      description: '这间宽敞的客房提供空调、私人入口，以及配有浴缸和淋浴设施的私人浴室。在厨房内，客人可以找到冰箱、厨具、烤箱和微波炉。',
     },
     // Footer
     footer: {
