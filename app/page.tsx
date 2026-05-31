@@ -322,6 +322,16 @@ function App() {
       }
 
       setBookingStatus({ loading: false, success: true, error: null });
+
+      // Google Ads Conversion Event for Submit lead form (1)
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'conversion', {
+          'send_to': 'AW-18103018899/rmSACP-8tbYcEJPLmLhD',
+          'value': 1.0,
+          'currency': 'VND'
+        });
+      }
+
       // Reset form
       setBookingForm({
         name: '',
