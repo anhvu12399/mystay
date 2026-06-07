@@ -238,6 +238,18 @@ export const translations: Record<string, Record<Locale, string>> = {
     ko: '체크아웃 날짜는 체크인 날짜보다 늦어야 합니다.',
     zh: '退房日期必须晚于入住日期。'
   },
+  checkInPastError: {
+    en: 'Check-in date cannot be in the past.',
+    vi: 'Ngày nhận phòng không thể ở trong quá khứ.',
+    ko: '체크인 날짜는 과거일 수 없습니다.',
+    zh: '入住日期不能是过去的时间。'
+  },
+  requiredFieldsError: {
+    en: 'Please fill out all required fields.',
+    vi: 'Vui lòng điền đầy đủ các thông tin bắt buộc.',
+    ko: '모든 필수 항목을 입력해 주세요.',
+    zh: '请填写所有必填字段。'
+  },
 
   // Float & Footer
   whatsappFloat: {

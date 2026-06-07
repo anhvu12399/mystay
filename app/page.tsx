@@ -296,7 +296,39 @@ function App() {
     e.preventDefault();
     setBookingStatus({ loading: true, success: false, error: null });
 
-    // Client-side date validation
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const todayStr = `${yyyy}-${mm}-${dd}`;
+
+    // 1. Validate required fields manually
+    if (
+      !bookingForm.name.trim() ||
+      !bookingForm.email.trim() ||
+      !phoneLocal.trim() ||
+      !bookingForm.checkIn ||
+      !bookingForm.checkOut
+    ) {
+      setBookingStatus({
+        loading: false,
+        success: false,
+        error: getTranslation('requiredFieldsError', locale)
+      });
+      return;
+    }
+
+    // 2. Validate check-in date is not in the past
+    if (bookingForm.checkIn < todayStr) {
+      setBookingStatus({
+        loading: false,
+        success: false,
+        error: getTranslation('checkInPastError', locale)
+      });
+      return;
+    }
+
+    // 3. Client-side check-out date validation
     if (new Date(bookingForm.checkOut) <= new Date(bookingForm.checkIn)) {
       setBookingStatus({
         loading: false,
@@ -577,7 +609,6 @@ function App() {
                     value={bookingForm.name}
                     onChange={(e) => setBookingForm({ ...bookingForm, name: e.target.value })}
                     placeholder="e.g. John Doe"
-                    required
                     autoComplete="name"
                   />
                 </div>
@@ -590,7 +621,6 @@ function App() {
                     value={bookingForm.email}
                     onChange={(e) => setBookingForm({ ...bookingForm, email: e.target.value })}
                     placeholder="e.g. johndoe@gmail.com"
-                    required
                     autoComplete="email"
                   />
                 </div>
@@ -619,7 +649,6 @@ function App() {
                       value={phoneLocal}
                       onChange={(e) => setPhoneLocal(e.target.value)}
                       placeholder="e.g. 988 600 388"
-                      required
                       autoComplete="tel"
                     />
 
@@ -674,7 +703,6 @@ function App() {
                     id="booking-room"
                     value={bookingForm.room}
                     onChange={(e) => setBookingForm({ ...bookingForm, room: e.target.value })}
-                    required
                   >
                     <option value="Deluxe Double Room">{getTranslation('Deluxe Double Room', locale)}</option>
                     <option value="Apartment with Balcony">{getTranslation('Apartment with Balcony', locale)}</option>
@@ -689,7 +717,6 @@ function App() {
                     id="booking-checkin"
                     value={bookingForm.checkIn}
                     onChange={(e) => setBookingForm({ ...bookingForm, checkIn: e.target.value })}
-                    required
                     min={minDate}
                   />
                 </div>
@@ -701,7 +728,6 @@ function App() {
                     id="booking-checkout"
                     value={bookingForm.checkOut}
                     onChange={(e) => setBookingForm({ ...bookingForm, checkOut: e.target.value })}
-                    required
                     min={bookingForm.checkIn || minDate}
                   />
                 </div>
