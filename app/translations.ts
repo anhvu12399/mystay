@@ -250,6 +250,36 @@ export const translations: Record<string, Record<Locale, string>> = {
     ko: '모든 필수 항목을 입력해 주세요.',
     zh: '请填写所有必填字段。'
   },
+  missingNameError: {
+    en: 'Please enter your full name.',
+    vi: 'Vui lòng nhập họ và tên của bạn.',
+    ko: '성함을 입력해 주세요.',
+    zh: '请输入您的姓名。'
+  },
+  missingContactError: {
+    en: 'Please enter either your email address or phone number.',
+    vi: 'Vui lòng cung cấp ít nhất địa chỉ email hoặc số điện thoại.',
+    ko: '이메일 주소 또는 전화번호 중 하나를 입력해 주세요.',
+    zh: '请输入您的电子邮箱或电话号码。'
+  },
+  missingCheckInError: {
+    en: 'Please select a check-in date.',
+    vi: 'Vui lòng chọn ngày nhận phòng.',
+    ko: '체크인 날짜를 선택해 주세요.',
+    zh: '请选择入住日期。'
+  },
+  missingCheckOutError: {
+    en: 'Please select a check-out date.',
+    vi: 'Vui lòng chọn ngày trả phòng.',
+    ko: '체크아웃 날짜를 선택해 주세요.',
+    zh: '请选择退房日期。'
+  },
+  okButton: {
+    en: 'OK',
+    vi: 'Đồng ý',
+    ko: '확인',
+    zh: '好的'
+  },
 
   // Float & Footer
   whatsappFloat: {

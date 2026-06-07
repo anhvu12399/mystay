@@ -282,6 +282,12 @@ function App() {
     c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     c.code.includes(searchQuery)
   );
+  const [errorModal, setErrorModal] = useState<{
+    isOpen: boolean;
+    message: string;
+    focusId: string;
+  } | null>(null);
+
   const [bookingStatus, setBookingStatus] = useState<{
     loading: boolean;
     success: boolean;
@@ -302,38 +308,64 @@ function App() {
     const dd = String(today.getDate()).padStart(2, '0');
     const todayStr = `${yyyy}-${mm}-${dd}`;
 
-    // 1. Validate required fields manually (Name, Check-In, Check-Out are strictly required. Either Email or Phone must be provided)
+    // 1. Validate required fields manually and set specific error popups
+    if (!bookingForm.name.trim()) {
+      setBookingStatus({ loading: false, success: false, error: null });
+      setErrorModal({
+        isOpen: true,
+        message: getTranslation('missingNameError', locale),
+        focusId: 'booking-name'
+      });
+      return;
+    }
+
     const hasContactMethod = bookingForm.email.trim() !== '' || phoneLocal.trim() !== '';
-    if (
-      !bookingForm.name.trim() ||
-      !hasContactMethod ||
-      !bookingForm.checkIn ||
-      !bookingForm.checkOut
-    ) {
-      setBookingStatus({
-        loading: false,
-        success: false,
-        error: getTranslation('requiredFieldsError', locale)
+    if (!hasContactMethod) {
+      setBookingStatus({ loading: false, success: false, error: null });
+      setErrorModal({
+        isOpen: true,
+        message: getTranslation('missingContactError', locale),
+        focusId: 'booking-email'
       });
       return;
     }
 
-    // 2. Validate check-in date is not in the past
+    if (!bookingForm.checkIn) {
+      setBookingStatus({ loading: false, success: false, error: null });
+      setErrorModal({
+        isOpen: true,
+        message: getTranslation('missingCheckInError', locale),
+        focusId: 'booking-checkin'
+      });
+      return;
+    }
+
     if (bookingForm.checkIn < todayStr) {
-      setBookingStatus({
-        loading: false,
-        success: false,
-        error: getTranslation('checkInPastError', locale)
+      setBookingStatus({ loading: false, success: false, error: null });
+      setErrorModal({
+        isOpen: true,
+        message: getTranslation('checkInPastError', locale),
+        focusId: 'booking-checkin'
       });
       return;
     }
 
-    // 3. Client-side check-out date validation
+    if (!bookingForm.checkOut) {
+      setBookingStatus({ loading: false, success: false, error: null });
+      setErrorModal({
+        isOpen: true,
+        message: getTranslation('missingCheckOutError', locale),
+        focusId: 'booking-checkout'
+      });
+      return;
+    }
+
     if (new Date(bookingForm.checkOut) <= new Date(bookingForm.checkIn)) {
-      setBookingStatus({
-        loading: false,
-        success: false,
-        error: getTranslation('dateError', locale)
+      setBookingStatus({ loading: false, success: false, error: null });
+      setErrorModal({
+        isOpen: true,
+        message: getTranslation('dateError', locale),
+        focusId: 'booking-checkout'
       });
       return;
     }
@@ -841,6 +873,112 @@ function App() {
             document.getElementById('book-direct')?.scrollIntoView({ behavior: 'smooth' });
           }}
         />
+      )}
+
+      {/* Custom Premium Error Alert Modal */}
+      {errorModal && errorModal.isOpen && (
+        <div className="custom-error-modal-overlay">
+          <div className="custom-error-modal-card">
+            <div className="custom-error-modal-header">
+              <span className="error-icon">⚠️</span>
+            </div>
+            <div className="custom-error-modal-body">
+              <p>{errorModal.message}</p>
+            </div>
+            <div className="custom-error-modal-footer">
+              <button
+                type="button"
+                className="btn btn-primary"
+                style={{ width: '100%', padding: '0.75rem 2rem' }}
+                onClick={() => {
+                  const focusId = errorModal.focusId;
+                  setErrorModal(null);
+                  setTimeout(() => {
+                    const element = document.getElementById(focusId);
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      // Add a brief delay before focusing to let the scroll complete
+                      setTimeout(() => {
+                        element.focus();
+                      }, 400);
+                    }
+                  }, 50);
+                }}
+              >
+                {getTranslation('okButton', locale)}
+              </button>
+            </div>
+          </div>
+
+          <style jsx>{`
+            .custom-error-modal-overlay {
+              position: fixed;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background-color: rgba(0, 0, 0, 0.4);
+              backdrop-filter: blur(8px);
+              -webkit-backdrop-filter: blur(8px);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              z-index: 99999;
+              animation: overlayFadeIn 0.3s ease;
+            }
+
+            .custom-error-modal-card {
+              background: rgba(255, 255, 255, 0.95);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              border-radius: 20px;
+              width: 90%;
+              max-width: 400px;
+              padding: 2rem;
+              box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+              text-align: center;
+              animation: cardZoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            }
+
+            .custom-error-modal-header {
+              margin-bottom: 1rem;
+            }
+
+            .error-icon {
+              font-size: 3rem;
+              display: inline-block;
+              animation: bounce 1s infinite alternate;
+            }
+
+            .custom-error-modal-body {
+              font-family: var(--font-sans), sans-serif;
+              font-size: 1.05rem;
+              font-weight: 500;
+              line-height: 1.5;
+              color: #2c3e50;
+              margin-bottom: 2rem;
+            }
+
+            .custom-error-modal-footer {
+              display: flex;
+              justify-content: center;
+            }
+
+            @keyframes overlayFadeIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+
+            @keyframes cardZoomIn {
+              from { transform: scale(0.8); opacity: 0; }
+              to { transform: scale(1); opacity: 1; }
+            }
+
+            @keyframes bounce {
+              from { transform: translateY(0); }
+              to { transform: translateY(-10px); }
+            }
+          `}</style>
+        </div>
       )}
     </>
   );
