@@ -6,10 +6,10 @@ export async function POST(request: Request) {
     const body = await request.json();
     const { name, email, phone, room, checkIn, checkOut, requests } = body;
 
-    // Server-side validation
-    if (!name || !email || !phone || !room || !checkIn || !checkOut) {
+    // Server-side validation (Requires Name, Room, CheckIn, CheckOut, and AT LEAST ONE of Email or Phone)
+    if (!name || (!email && !phone) || !room || !checkIn || !checkOut) {
       return NextResponse.json(
-        { error: 'Missing required fields' },
+        { error: 'Missing required fields. Name, room, check-in, check-out, and at least one contact method (email or phone) are required.' },
         { status: 400 }
       );
     }
@@ -90,11 +90,11 @@ export async function POST(request: Request) {
             </tr>
             <tr>
               <td style="padding: 0.5rem 0; font-weight: 600; color: #666;">Email Address:</td>
-              <td style="padding: 0.5rem 0; color: #1a1a1a;"><a href="mailto:${email}" style="color: #003580; text-decoration: none;">${email}</a></td>
+              <td style="padding: 0.5rem 0; color: #1a1a1a;">${email ? `<a href="mailto:${email}" style="color: #003580; text-decoration: none;">${email}</a>` : 'Not provided'}</td>
             </tr>
             <tr>
               <td style="padding: 0.5rem 0; font-weight: 600; color: #666;">Phone Number:</td>
-              <td style="padding: 0.5rem 0; color: #1a1a1a;"><a href="tel:${phone}" style="color: #003580; text-decoration: none;">${phone}</a></td>
+              <td style="padding: 0.5rem 0; color: #1a1a1a;">${phone ? `<a href="tel:${phone}" style="color: #003580; text-decoration: none;">${phone}</a>` : 'Not provided'}</td>
             </tr>
           </table>
 

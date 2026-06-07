@@ -302,11 +302,11 @@ function App() {
     const dd = String(today.getDate()).padStart(2, '0');
     const todayStr = `${yyyy}-${mm}-${dd}`;
 
-    // 1. Validate required fields manually
+    // 1. Validate required fields manually (Name, Check-In, Check-Out are strictly required. Either Email or Phone must be provided)
+    const hasContactMethod = bookingForm.email.trim() !== '' || phoneLocal.trim() !== '';
     if (
       !bookingForm.name.trim() ||
-      !bookingForm.email.trim() ||
-      !phoneLocal.trim() ||
+      !hasContactMethod ||
       !bookingForm.checkIn ||
       !bookingForm.checkOut
     ) {
