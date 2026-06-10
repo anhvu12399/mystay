@@ -208,7 +208,18 @@ const countries = [
   { name: 'China', flag: '🇨🇳', code: '+86' },
   { name: 'Germany', flag: '🇩🇪', code: '+49' },
   { name: 'France', flag: '🇫🇷', code: '+33' },
+  { name: 'Switzerland', flag: '🇨🇭', code: '+41' },
+  { name: 'Italy', flag: '🇮🇹', code: '+39' },
+  { name: 'Spain', flag: '🇪🇸', code: '+34' },
+  { name: 'Netherlands', flag: '🇳🇱', code: '+31' },
+  { name: 'Belgium', flag: '🇧🇪', code: '+32' },
+  { name: 'Sweden', flag: '🇸🇪', code: '+46' },
+  { name: 'Norway', flag: '🇳🇴', code: '+47' },
+  { name: 'Denmark', flag: '🇩🇰', code: '+45' },
+  { name: 'Finland', flag: '🇫🇮', code: '+358' },
+  { name: 'Russia', flag: '🇷🇺', code: '+7' },
   { name: 'India', flag: '🇮🇳', code: '+91' },
+  { name: 'Hong Kong', flag: '🇭🇰', code: '+852' },
   { name: 'Malaysia', flag: '🇲🇾', code: '+60' },
   { name: 'Thailand', flag: '🇹🇭', code: '+66' },
   { name: 'Philippines', flag: '🇵🇭', code: '+63' },
@@ -216,7 +227,9 @@ const countries = [
   { name: 'Cambodia', flag: '🇰🇭', code: '+855' },
   { name: 'Laos', flag: '🇱🇦', code: '+856' },
   { name: 'New Zealand', flag: '🇳🇿', code: '+64' },
-  { name: 'Canada', flag: '🇨🇦', code: '+1' }
+  { name: 'Canada', flag: '🇨🇦', code: '+1' },
+  { name: 'Israel', flag: '🇮🇱', code: '+972' },
+  { name: 'United Arab Emirates', flag: '🇦🇪', code: '+971' }
 ];
 
 function App() {
