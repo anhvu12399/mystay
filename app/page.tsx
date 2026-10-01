@@ -1,114 +1,19 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { User, Maximize, MapPin, Star, Menu, X, ArrowRight, Smile, Frown, Image as ImageIcon, ChevronLeft, ChevronRight, ChevronDown, Phone, Calendar, Mail, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { 
+  User, Maximize, MapPin, Star, Menu, X, ArrowRight, Smile, Frown, 
+  Image as ImageIcon, ChevronLeft, ChevronRight, ChevronDown, Phone, 
+  Calendar, Mail, Send, CheckCircle, AlertCircle, Video, Lock, ExternalLink 
+} from 'lucide-react';
+import Link from 'next/link';
 import RoomModal from '../components/RoomModal';
+import VideoModal from '../components/VideoModal';
+import { defaultRoomsData, Room, AppData } from '../data/roomsData';
 
 const heroImages = [
   "https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg",
   "https://q-xx.bstatic.com/xdata/images/hotel/max1280x900/676916728.jpg?k=fd6882e0a2af07e107f5526cc798fae525cf39211205720d5ba3dee804519aef&o=",
   "https://q-xx.bstatic.com/xdata/images/hotel/max1280x900/414205039.jpg?k=93718982e114147c0eb1d9165c88e8522732b2532cfd79f7e918279c17f0ebce&o="
-];
-
-const rooms = [
-  {
-    id: 1,
-    title: 'Deluxe Double Room',
-    subtitle: '1 adult + 1 child',
-    beds: '1 extra-large double bed and 1 sofa bed',
-    size: '30 m²',
-    price: '1,000,000',
-    originalPrice: '1,000,000',
-    usdPrice: '39',
-    image: 'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916728.jpg?k=fd6882e0a2af07e107f5526cc798fae525cf39211205720d5ba3dee804519aef&o=&s=1024x',
-    images: [
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916728.jpg?k=fd6882e0a2af07e107f5526cc798fae525cf39211205720d5ba3dee804519aef&o=&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/733150354.jpg?k=a17f2a098a33db4c5c137268fa3f5d4a12e8d4f8f0e921f759eeccbfc4308fa6&o=&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916722.jpg?k=2f3f8ec804263fc726b4c8a5cfc5eb9bdc626ff23cb668578d9d99dd974beff4&o=&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/733150352.jpg?k=4db5b577bc5e63d9c21a1bc374bf29e1cb686d564dae74935ee135016c25bfe9&o=&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/733150353.jpg?k=3123eaa06ba214741e76aa4d69e2e3e8e9ed3f7bd90b35ef137e81effe67cb40&o=&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/676916717.jpg?k=9efc582a838238563392ce882027c0cdf10623a8eb4e7a8bdf29d7f695e8b1df&o=&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/411164263.jpg?k=dd11ec0eb0b12d76f3c051ff5ec2592fbd8c24690e1ee6b929292d75432863d6&o=&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/733150349.jpg?k=131f1416d941f89bcf08b50fea3f1f46888ae805c36a18430f33bbe6022e2b6f&o=&s=1024x'
-    ],
-    features: ['Private kitchen', 'Private bathroom', 'View', 'Air conditioning', 'Flat-screen TV', 'Free WiFi'],
-    amenities: {
-      kitchen: ['Refrigerator', 'Kitchenware', 'Outdoor furniture', 'Toaster', 'Microwave', 'Minibar', 'Oven', 'Dining table'],
-      bathroom: ['Bath', 'Free toiletries', 'Shower', 'Sauna', 'Toilet', 'Slippers', 'Hairdryer', 'Additional toilet', 'Toilet paper'],
-      view: ['City view', 'Balcony'],
-      facilities: ['Air conditioning', 'Flat-screen TV', 'Free WiFi', 'Desk', 'Hardwood floors']
-    },
-    maxPersons: 2,
-    badge: 'Popular',
-  },
-  {
-    id: 2,
-    title: 'Apartment with Balcony',
-    subtitle: 'Bedroom 1: 1 extra-large double bed | Living room: 1 sofa bed',
-    beds: 'Entire apartment',
-    size: '45 m²',
-    price: '1,200,000',
-    originalPrice: '1,200,000',
-    usdPrice: '47',
-    image: '/images/apartment_balcony/img_1183.jpg',
-    images: [
-      '/images/apartment_balcony/img_1183.jpg',
-      '/images/apartment_balcony/img_1184.jpg',
-      '/images/apartment_balcony/img_1185.jpg',
-      '/images/apartment_balcony/img_1186.jpg',
-      '/images/apartment_balcony/img_1187.jpg',
-      '/images/apartment_balcony/img_1188.jpg',
-      '/images/apartment_balcony/z7871956688399_80f2a4ca59e3adcbef3b6745bc842068.jpg',
-      '/images/apartment_balcony/z7871956694278_60f32fab3b77ac582956dcff38f46707.jpg',
-      '/images/apartment_balcony/z7871956702803_4143ecb0142129cec8dae127a72cb265.jpg',
-      '/images/apartment_balcony/z7871956703818_7b124ae06a894cb92ddbdd2e5110c26e.jpg',
-      '/images/apartment_balcony/z7871956717463_ab87d19678f9a68bfa04a748a8c77830.jpg',
-      '/images/apartment_balcony/z7871956723443_c3ddeac32a52232f52152c42bd4eb89f.jpg',
-      '/images/apartment_balcony/z7871956725328_c76a52dbdd89831699bb05a82306a206.jpg',
-      '/images/apartment_balcony/z7871956736226_9a27a3ba46b66ea116d7f5f4eac2e6ad.jpg'
-    ],
-    features: ['Private kitchen', 'Ensuite bathroom', 'Balcony', 'View', 'Air conditioning', 'Terrace', 'Free WiFi'],
-    amenities: {
-      kitchen: ['Refrigerator', 'Kitchenware', 'Outdoor furniture', 'Toaster', 'Microwave', 'Minibar', 'Oven', 'Dining table', 'Stovetop'],
-      bathroom: ['Bath', 'Free toiletries', 'Shower', 'Toilet', 'Slippers', 'Hairdryer', 'Additional toilet', 'Toilet paper'],
-      view: ['City view', 'Balcony', 'Terrace'],
-      facilities: ['Air conditioning', 'Flat-screen TV', 'Free WiFi', 'Desk', 'Hardwood floors', 'Seating area']
-    },
-    maxPersons: 2,
-    badge: 'Premium',
-  },
-  {
-    id: 4,
-    title: 'Studio with Balcony',
-    subtitle: '1 extra-large double bed',
-    beds: 'Entire studio',
-    size: '30 m²',
-    price: '1,000,000',
-    originalPrice: '1,000,000',
-    usdPrice: '39',
-    image: 'https://pix8.agoda.net/hotelImages/71131100/1129048000/1abd20010e503d4d000aa308fd0a1623.jpg?ce=2&s=1024x',
-    images: [
-      'https://pix8.agoda.net/hotelImages/71131100/1129048000/1abd20010e503d4d000aa308fd0a1623.jpg?ce=2&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414205039.jpg?k=93718982e114147c0eb1d9165c88e8522732b2532cfd79f7e918279c17f0ebce&o=&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414205006.jpg?k=625eb607c5758e04b0c4da02f81c33c0ffee98e5f6829bbe460c796210612340&o=&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414204983.jpg?k=b4046c481c04a6f74fb242e2a2124030d2f4b76ffc1e65fea8fb983bc3f9c5cb&o=&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414204981.jpg?k=c0ec3aabb23e1c3ab7a621e036fe550c3288ee90b5d10135b765e356f46d874a&o=&s=1024x',
-      'https://pix8.agoda.net/hotelImages/71131100/1129048000/096d6398b18e599c6e1e962d92d5dab3.jpg?ce=2&s=1024x',
-      'https://pix8.agoda.net/hotelImages/71131100/1129048000/9ee0971281692360a8bdc48e51357825.jpg?ce=2&s=1024x',
-      'https://pix8.agoda.net/hotelImages/71131100/1129048000/e225c3f0969f7bdfb9ab1a1eedb18b20.jpg?ce=2&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414205032.jpg?k=aebd1e6c0ff83b60a15cba7ddbc448331f1bdce4e731f236556d056743671229&o=&s=1024x',
-      'https://pix8.agoda.net/hotelImages/71131100/1129048000/0795f10b722f24d3eee21f960753e5d9.jpg?ce=2&s=1024x',
-      'https://q-xx.bstatic.com/xdata/images/hotel/840x460/414205001.jpg?k=a9854be3492ac19fc8e678d303f73cf0b0d4a7ad095d9a5698a5cb44a024d874&o=&s=1024x',
-      'https://pix8.agoda.net/hotelImages/71131100/1129048000/33918d9d48aaba8eda70776dc9268e7b.jpg?ce=2&s=1024x'
-    ],
-    features: ['Private kitchen', 'Private bathroom', 'Balcony', 'View', 'Air conditioning', 'Free WiFi'],
-    amenities: {
-      kitchen: ['Refrigerator', 'Kitchenware', 'Outdoor furniture', 'Microwave', 'Minibar'],
-      bathroom: ['Shower', 'Toilet', 'Slippers', 'Hairdryer', 'Toilet paper', 'Free toiletries'],
-      view: ['City view', 'Balcony'],
-      facilities: ['Air conditioning', 'Flat-screen TV', 'Free WiFi', 'Desk', 'Hardwood floors']
-    },
-    maxPersons: 2,
-  }
 ];
 
 const reviews = [
@@ -218,9 +123,11 @@ const countries = [
 ];
 
 function App() {
+  const [appData, setAppData] = useState<AppData>(defaultRoomsData);
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<any>(null);
+  const [activeVideo, setActiveVideo] = useState<{ url: string; title: string } | null>(null);
   const [currentHeroIdx, setCurrentHeroIdx] = useState(0);
   const [minDate, setMinDate] = useState('');
   const [bookingForm, setBookingForm] = useState({
@@ -238,6 +145,35 @@ function App() {
   const [selectedCountry, setSelectedCountry] = useState({ name: 'Vietnam', flag: '🇻🇳', code: '+84' });
   const [countryDropdownOpen, setCountryDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Fetch live custom data or load localStorage
+  useEffect(() => {
+    try {
+      const local = localStorage.getItem('mystay_custom_rooms');
+      if (local) {
+        const parsed = JSON.parse(local);
+        if (parsed.rooms && parsed.rooms.length > 0) {
+          setAppData(parsed);
+        }
+      }
+    } catch (e) {
+      console.warn('Error reading localStorage rooms:', e);
+    }
+
+    fetch('/api/rooms')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        if (json && json.rooms && json.rooms.length > 0) {
+          setAppData(json);
+        }
+      })
+      .catch((err) => {
+        console.warn('Fallback to local rooms:', err);
+      });
+  }, []);
+
+  const rooms = appData.rooms || defaultRoomsData.rooms;
+  const seasonalBanner = appData.seasonalBanner || defaultRoomsData.seasonalBanner;
 
   // Sync phone local + prefix to main bookingForm.phone
   useEffect(() => {
@@ -265,6 +201,7 @@ function App() {
     c.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
     c.code.includes(searchQuery)
   );
+
   const [bookingStatus, setBookingStatus] = useState<{
     loading: boolean;
     success: boolean;
@@ -310,7 +247,7 @@ function App() {
         name: '',
         email: '',
         phone: '',
-        room: 'Deluxe Double Room',
+        room: rooms[0]?.title || 'Deluxe Double Room',
         checkIn: '',
         checkOut: '',
         requests: ''
@@ -362,7 +299,7 @@ function App() {
         
         <button 
           className="mobile-menu-btn" 
-          style={{ display: 'none' }} // Assuming handled by media query in a real setup, but keeping simple here
+          style={{ display: 'none' }}
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X color={scrolled ? '#1a1a1a' : '#fff'} /> : <Menu color={scrolled ? '#1a1a1a' : '#fff'} />}
@@ -400,23 +337,31 @@ function App() {
           <h2 className="section-title">Stay With Us</h2>
         </div>
 
-        {/* Peak Season Pricing Notice */}
-        <div className="peak-season-banner">
-          <div className="peak-season-banner-inner">
-            <div className="peak-season-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
-                <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14.93V18a1 1 0 0 1-2 0v-1.07A8 8 0 0 1 4.07 11H5a1 1 0 0 1 0 2 6 6 0 0 0 5 5.92V17a1 1 0 0 1 2 0v1.07A6 6 0 0 0 19 12a1 1 0 0 1 2 0 8 8 0 0 1-8 6.93zM12 6a1 1 0 0 1 1 1v5a1 1 0 0 1-2 0V7a1 1 0 0 1 1-1z"/>
-              </svg>
+        {/* Seasonal Pricing & Peak Notice Banner */}
+        {seasonalBanner?.enabled && (
+          <div className="peak-season-banner">
+            <div className="peak-season-banner-inner">
+              <div className="peak-season-icon">
+                <Calendar size={22} color="#fff" />
+              </div>
+              <div className="peak-season-text">
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                  <strong>📅 {seasonalBanner.title || 'Seasonal Rates Notice'}</strong>
+                  <span className="banner-date-badge">{seasonalBanner.seasonPeriod || '1 October – 20 December'}</span>
+                </div>
+                <span>
+                  Deluxe Double: <strong>VND 1,500,000</strong> • Studio: <strong>VND 1,700,000</strong> • Apartment: <strong>VND 2,000,000</strong>. 
+                  <span className="peak-highlight">
+                    <strong>{seasonalBanner.peakPeriod || '21 Dec – 3 Jan'}:</strong> {seasonalBanner.peakNotice || 'Contact us for our best rate'}
+                  </span>
+                </span>
+              </div>
+              <a href={seasonalBanner.buttonLink || '#book-direct'} className="peak-season-cta">
+                {seasonalBanner.buttonText || 'Book Direct & Save 10%'}
+              </a>
             </div>
-            <div className="peak-season-text">
-              <strong>📅 Seasonal Pricing Notice</strong>
-              <span>Prices shown are current rates. <span className="peak-highlight">From September 2025 onwards, room rates start from <strong>VND 2,000,000/night</strong></span> due to peak travel season. Book now to lock in today's lower rates!</span>
-            </div>
-            <a href="#book-direct" className="peak-season-cta">
-              Book Now & Save
-            </a>
           </div>
-        </div>
+        )}
 
         <div className="rooms-grid">
           {rooms.map((room) => (
@@ -424,25 +369,40 @@ function App() {
               <div className="room-image-wrap">
                 <img src={room.image} alt={room.title} className="room-image" />
                 <div className="view-photos-overlay">
-                  <ImageIcon size={14} /> View Photos
+                  <ImageIcon size={14} /> View Photos ({room.images?.length || 1})
                 </div>
                 {room.badge && <span className="room-badge">{room.badge}</span>}
+
+                {/* Video Tour Pill Button */}
+                {room.videoUrl && (
+                  <button
+                    type="button"
+                    className="card-video-pill"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveVideo({ url: room.videoUrl!, title: room.title });
+                    }}
+                    title="Watch private balcony video"
+                  >
+                    <Video size={13} /> <span>Watch Balcony Video</span>
+                  </button>
+                )}
               </div>
               
               <div className="room-content">
                 <h3 className="room-title">{room.title}</h3>
-                <p className="mb-4" style={{ fontSize: '0.875rem', color: 'var(--text-light)' }}>
+                <p className="mb-4" style={{ fontSize: '0.875rem', color: 'var(--text-light)', minHeight: '40px' }}>
                   {room.subtitle} <br/> {room.beds}
                 </p>
                 
                 <div className="room-meta">
                   <span><Maximize size={16} /> {room.size}</span>
-                  <span><User size={16} /> Max {room.maxPersons}</span>
+                  <span><User size={16} /> Max {room.maxPersons} {room.maxPersons > 1 ? 'Guests' : 'Guest'}</span>
                 </div>
                 
                 <div className="room-features">
                   <ul className="room-features-list">
-                    {room.features.slice(0, 4).map((feature, idx) => (
+                    {room.features.slice(0, 4).map((feature: string, idx: number) => (
                       <li key={idx}>{feature}</li>
                     ))}
                     {room.features.length > 4 && <li>+{room.features.length - 4} more</li>}
@@ -451,20 +411,40 @@ function App() {
                 
                 <div className="room-footer">
                   <div className="room-price-wrap">
-                    <span className="room-price-label">From</span>
-                    <span className="room-price">VND {room.price}</span>
-                    <span className="room-price-usd" style={{ fontSize: '0.85rem', color: 'var(--text-light)', display: 'block', marginTop: '0.15rem' }}>approx. ${room.usdPrice}</span>
+                    {room.isContactPrice ? (
+                      <>
+                        <span className="room-price-label">Rates</span>
+                        <span className="room-price" style={{ fontSize: '1.25rem' }}>Contact us</span>
+                        <div className="room-season-dates">
+                          <span className="season-date-tag contact">Contact us for our best rate</span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <span className="room-price-label">From</span>
+                        <span className="room-price">VND {room.price}</span>
+                        {room.usdPrice && (
+                          <span className="room-price-usd" style={{ fontSize: '0.82rem', color: 'var(--text-light)', display: 'block', marginTop: '0.1rem' }}>
+                            approx. ${room.usdPrice}/night
+                          </span>
+                        )}
+                        <div className="room-season-dates">
+                          <span className="season-date-tag">🗓 1 Oct – 20 Dec</span>
+                          <span className="peak-date-tag">🎄 21 Dec – 3 Jan: Contact us</span>
+                        </div>
+                      </>
+                    )}
                   </div>
                   <button 
                     className="btn btn-primary" 
-                    style={{ padding: '0.5rem 1.5rem', fontSize: '0.75rem' }}
+                    style={{ padding: '0.55rem 1.4rem', fontSize: '0.75rem', alignSelf: 'flex-end', whiteSpace: 'nowrap' }}
                     onClick={(e) => {
                       e.stopPropagation();
                       setBookingForm({ ...bookingForm, room: room.title });
                       document.getElementById('book-direct')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                   >
-                    Book Now
+                    {room.isContactPrice ? 'Inquire' : 'Book Now'}
                   </button>
                 </div>
               </div>
@@ -667,16 +647,18 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="booking-room">Select Apartment</label>
+                  <label htmlFor="booking-room">Select Accommodation</label>
                   <select
                     id="booking-room"
                     value={bookingForm.room}
                     onChange={(e) => setBookingForm({ ...bookingForm, room: e.target.value })}
                     required
                   >
-                    <option value="Deluxe Double Room">Deluxe Double Room</option>
-                    <option value="Apartment with Balcony">Apartment with Balcony</option>
-                    <option value="Studio with Balcony">Studio with Balcony</option>
+                    {rooms.map((r) => (
+                      <option key={r.id} value={r.title}>
+                        {r.title} {r.isContactPrice ? '(Contact Us)' : `(From VND ${r.price})`}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -905,8 +887,14 @@ function App() {
             <ul>
               <li><a href="#about">About Us</a></li>
               <li><a href="#rooms">Rooms & Suites</a></li>
+              <li><a href="#tours">Vietnam Tours</a></li>
               <li><a href="#reviews">Guest Reviews</a></li>
               <li><a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer">Contact</a></li>
+              <li>
+                <Link href="/admin" style={{ opacity: 0.75, display: 'inline-flex', alignItems: 'center', gap: 4, marginTop: 4 }}>
+                  <Lock size={12} /> Admin Portal
+                </Link>
+              </li>
             </ul>
           </div>
           
@@ -946,6 +934,15 @@ function App() {
             setBookingForm((prev) => ({ ...prev, room: roomTitle }));
             document.getElementById('book-direct')?.scrollIntoView({ behavior: 'smooth' });
           }}
+        />
+      )}
+
+      {/* Balcony Video Modal */}
+      {activeVideo && (
+        <VideoModal
+          videoUrl={activeVideo.url}
+          title={activeVideo.title}
+          onClose={() => setActiveVideo(null)}
         />
       )}
     </>
