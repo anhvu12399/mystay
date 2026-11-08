@@ -9,6 +9,7 @@ import Link from 'next/link';
 import RoomModal from '../components/RoomModal';
 import VideoModal from '../components/VideoModal';
 import { defaultRoomsData, Room, AppData } from '../data/roomsData';
+import { business, faqs } from '../data/business';
 
 const heroImages = [
   "https://pix8.agoda.net/hotelImages/71131100/0/16c477e3dbd696bfa57fb9247b2efaf1.jpeg",
@@ -287,13 +288,14 @@ function App() {
   return (
     <>
       <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
-        <a href="#" className="navbar-brand">My Stay & Apartment</a>
+        <a href="#" className="navbar-brand">{business.name}</a>
         
         <div className="navbar-links">
           <a href="#about" className="navbar-link">About</a>
           <a href="#rooms" className="navbar-link">Rooms</a>
           <a href="#tours" className="navbar-link">Tours</a>
           <a href="#reviews" className="navbar-link">Reviews</a>
+          <a href="#faq" className="navbar-link">FAQ</a>
           <a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer" className="navbar-link">Contact</a>
         </div>
         
@@ -311,7 +313,7 @@ function App() {
           <img 
             key={idx}
             src={src} 
-            alt="Luxury Hotel" 
+            alt={`${business.name}, District 1, Ho Chi Minh City`} 
             className="hero-bg"
             style={{ 
               opacity: idx === currentHeroIdx ? 1 : 0, 
@@ -321,15 +323,57 @@ function App() {
           />
         ))}
         <div className="hero-content">
-          <span className="hero-subtitle">Boutique Luxury</span>
-          <h1 className="hero-title">Experience Unparalleled Comfort</h1>
+          <span className="hero-subtitle">{business.name} · District 1, Saigon</span>
+          <h1 className="hero-title">Serviced Rooms &amp; Apartments in District 1, Ho Chi Minh City</h1>
           <p className="hero-text">
-            An exclusive collection of 10 meticulously designed rooms and apartments tailored for the modern traveler. 
-            <strong> Book directly with us to unlock an exclusive 10% discount on your stay!</strong>
+            {business.numberOfRooms} rooms and apartments with private kitchens on a quiet alley at 139/5 Nguyễn Cư Trinh. Stay by the night or by the month.
+            <strong> Book directly with us for 10% off your stay.</strong>
           </p>
           <a href="#rooms" className="btn btn-primary">Discover Our Rooms</a>
         </div>
       </header>
+
+      <section id="about" className="container py-16">
+        <div className="section-header">
+          <span className="section-subtitle">About {business.name}</span>
+          <h2 className="section-title">Your Base in District 1</h2>
+          <p className="section-desc about-lead">{business.shortDescription}</p>
+        </div>
+
+        <div className="about-grid">
+          <div className="about-card">
+            <h3>Location</h3>
+            <p>{business.address.display}</p>
+            <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer">Open in Google Maps →</a>
+          </div>
+          <div className="about-card">
+            <h3>Check-in &amp; check-out</h3>
+            <p>{business.policies.checkIn}</p>
+            <p>{business.policies.checkOut}</p>
+          </div>
+          <div className="about-card">
+            <h3>Monthly stays</h3>
+            <p>Smaller rooms from <strong>{business.monthly.smallFrom} VND/month</strong>, larger rooms and apartments from <strong>{business.monthly.largeFrom} VND/month</strong>.</p>
+            <a href={business.whatsappUrl} target="_blank" rel="noopener noreferrer">Ask about long stays →</a>
+          </div>
+          <div className="about-card">
+            <h3>Airport pick-up</h3>
+            <p>{business.airportTransfer.note}</p>
+            <p>4-seat car <strong>{business.airportTransfer.car4} VND</strong> · 7-seat car <strong>{business.airportTransfer.car7} VND</strong> per trip.</p>
+          </div>
+          <div className="about-card">
+            <h3>Guest ratings</h3>
+            <p><strong>{business.ratings.google.value}/{business.ratings.google.best}</strong> from {business.ratings.google.count} Google reviews</p>
+            <p><strong>{business.ratings.booking.value}/{business.ratings.booking.best}</strong> from {business.ratings.booking.count} Booking.com reviews</p>
+            <p className="about-note">As of {business.ratings.asOf}</p>
+          </div>
+          <div className="about-card">
+            <h3>Contact</h3>
+            <p>WhatsApp / phone: <a href={business.whatsappUrl} target="_blank" rel="noopener noreferrer">{business.phone}</a></p>
+            <p>Email: <a href={`mailto:${business.email}`}>{business.email}</a></p>
+          </div>
+        </div>
+      </section>
 
       <section id="rooms" className="container py-16">
         <div className="section-header">
@@ -533,13 +577,28 @@ function App() {
         </div>
       </section>
 
+      <section id="faq" className="container py-16">
+        <div className="section-header">
+          <span className="section-subtitle">Good to Know</span>
+          <h2 className="section-title">Questions &amp; Answers</h2>
+        </div>
+        <div className="faq-list">
+          {faqs.map((f) => (
+            <details key={f.q} className="faq-item">
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
       <section id="book-direct" className="booking-section py-16">
         <div className="container">
           <div className="section-header">
             <span className="section-subtitle">Secure Your Apartment</span>
             <h2 className="section-title">Book Direct & Save 10%</h2>
             <p className="section-desc" style={{ maxWidth: '600px', margin: '0 auto', color: 'var(--text-light)', fontSize: '0.95rem' }}>
-              Enjoy our guaranteed best rates and an exclusive direct booking discount. 
+              Booking direct gets you 10% off our listed rates. 
               Fill out this quick reservation inquiry and our reservation team will contact you within 3 hours.
             </p>
           </div>
@@ -878,8 +937,8 @@ function App() {
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-brand">
-            <h3>My Stay & Apartment</h3>
-            <p>A luxury boutique hotel experience offering 10 premium rooms and apartments for international guests.</p>
+            <h3>{business.name}</h3>
+            <p>{business.shortDescription}</p>
           </div>
           
           <div className="footer-links">
@@ -889,6 +948,7 @@ function App() {
               <li><a href="#rooms">Rooms & Suites</a></li>
               <li><a href="#tours">Vietnam Tours</a></li>
               <li><a href="#reviews">Guest Reviews</a></li>
+              <li><a href="#faq">Questions &amp; Answers</a></li>
               <li><a href="https://wa.me/84988600388" target="_blank" rel="noopener noreferrer">Contact</a></li>
               <li>
                 <Link href="/admin" style={{ opacity: 0.75, display: 'inline-flex', alignItems: 'center', gap: 4, marginTop: 4 }}>
@@ -903,7 +963,7 @@ function App() {
             <ul>
               <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'flex-start' }}>
                 <MapPin size={18} style={{ flexShrink: 0, marginTop: '2px' }}/>
-                139/5 Nguyễn Cư Trinh, Street, Cầu Ông Lãnh, Hồ Chí Minh 70000
+                <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer">{business.address.display}</a>
               </li>
               <li style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                 <a href="mailto:mywayapt@gmail.com">
@@ -921,7 +981,7 @@ function App() {
         </div>
         
         <div className="footer-bottom">
-          <p>&copy; {new Date().getFullYear()} My Stay & Apartment. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} {business.name}. All rights reserved.</p>
         </div>
       </footer>
 

@@ -1,0 +1,14 @@
+[
+  { "id": "MS-Q01", "cluster": "Brand", "query": "My Stay Hotel & Apartment Ho Chi Minh City review and address" },
+  { "id": "MS-Q02", "cluster": "Brand", "query": "What time is check-in at My Stay Hotel & Apartment in Saigon?" },
+  { "id": "MS-Q03", "cluster": "Brand", "query": "Does My Stay Hotel & Apartment District 1 offer airport pickup and how much?" },
+  { "id": "MS-Q04", "cluster": "Long stay", "query": "Serviced apartment in District 1 Ho Chi Minh City for monthly rent with kitchen" },
+  { "id": "MS-Q05", "cluster": "Long stay", "query": "Căn hộ dịch vụ Quận 1 thuê theo tháng có bếp giá dưới 15 triệu" },
+  { "id": "MS-Q06", "cluster": "Location", "query": "Quiet apartment hotel near Ben Thanh Market in an alley, District 1" },
+  { "id": "MS-Q07", "cluster": "Location", "query": "Aparthotel near Nguyen Cu Trinh street District 1 Saigon" },
+  { "id": "MS-Q08", "cluster": "Budget", "query": "Best rated small hotel with kitchen in District 1 Saigon under 70 USD per night" },
+  { "id": "MS-Q09", "cluster": "Group", "query": "Rent a whole house with 10 rooms in District 1 Ho Chi Minh City for a group" },
+  { "id": "MS-Q10", "cluster": "Family", "query": "Two-bedroom apartment for a family short stay in District 1 Ho Chi Minh City" },
+  { "id": "MS-Q11", "cluster": "Balcony", "query": "Apartment with big balcony in District 1 Saigon for a few nights" },
+  { "id": "MS-Q12", "cluster": "Digital nomad", "query": "Where to stay a month in Saigon as a digital nomad, apartment with kitchen in District 1" }
+]
